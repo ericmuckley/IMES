@@ -10,8 +10,11 @@ The software requires no formal installation, but installation of missing Python
 
 To run the IMES software, open a Python editor like *Spyder*, which comes pre-packaged with *Anaconda*. In the editor, open *IMES.py* in the *imes_python* folder. Run *IMES.py* in the editor. If there are errors because of missing libraries, you must first install those libraries. To install them, open the *Anaconda prompt*, which comes pre-packaged with *Anaconda*. In the Anaconda prompt, type `conda install library_name`, where *library_name* is the name of the missing library. You can do an internet search for "conda install X", where *X* is the missing library name to figure out the best way to install the package through *Anaconda*.
 <br>
-When all libraries are installed correctly, the GUI window will appear when *IMES.py* is run. To connect instuments, check the checkboxes on the left-hand side of the window. Before connecting an instument, change its address so it matches the actual physical address of the instument in the PC. It is easy to see which device addresses are connected using Windows *Device Manager* or National Instruments *Measurement and Automation Explorer*.
-
+When all libraries are installed correctly and *IMES.py* runs successfully, a file browser dialog will pop up ask ask you to designate a folder in which to save the experimental data files. You may select an existing folder or create a new one and select it. After selecting a folder for data files, the GUI window will appear. 
+<br>
+To connect instuments, check the checkboxes on the left-hand side of the window. Before connecting an instument, change its address so it matches the actual physical address of the instument in the PC. It is easy to see which device addresses are connected using Windows *Device Manager* or National Instruments *Measurement and Automation Explorer*.
+<br>
+While the IMES software is running, the output box in the lower left-hand corner of the window displays messages to the user. Instument and measurement setttings can be adjusted on the front panel of the GUI, and measurements and sequences of measurements can be initiated using the top toolbar.
 
 ### Layout of the software
 
@@ -35,4 +38,4 @@ The main *IMES.py* file
 
 ### Editing the software
 
-
+To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda*, and oen the  
