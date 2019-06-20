@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="ornl_logo">
+    <file>ornl_cnms_logo.png</file>
+  </qresource>
+</RCC>
