@@ -15,11 +15,11 @@ To run the software,
 
 
 
-*cades.py*: module for communicating with CADES virtual machine
-*eis.py*: module for controlling Solartron 1260 electrochemical impedance spectrometer
-*jkem.py*: module for controlling J-KEM temperature controller
-*keith.py*:	module for controlling Keithley 2420 multimeter
-*libusb-1.0.dll*: USB windows library which is needed for running IMES.py
+*cades.py*: module for communicating with CADES virtual machine;
+*eis.py*: module for controlling Solartron 1260 electrochemical impedance spectrometer;
+*jkem.py*: module for controlling J-KEM temperature controller;
+*keith.py*:	module for controlling Keithley 2420 multimeter;
+*libusb-1.0.dll*: USB windows library which is needed for running IMES.py;
 *ops.py*:	module for controlling main operations of IMES, like reading/writing data files, communication with Origin
 *origin.py*: module for communicating with Origin for plotting experimental results
 *realtimeplot.py*: module for creating real-time updating plots using the pyqtgraph library
