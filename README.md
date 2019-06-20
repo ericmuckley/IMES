@@ -1,6 +1,6 @@
 # IMES Software
 
-This repository contains software for the integrated multifunctional envinrmental system (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
+This repository contains software for controlling the integrated multifunctional envinrmental system (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
 ### Installing the software
 
