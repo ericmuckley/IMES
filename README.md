@@ -19,15 +19,18 @@ While the IMES software is running, the output box in the lower left-hand corner
 ### Layout of the software
 
 The main *IMES.py* file calls a number of files:\
+<br>
 **IMES_layout.ui**: the GUI layout file, which dictates where GUI objects are placed and their names\
 **libusb-1.0.dll**: a Windows USB library which may be required for communication with USB devices\
 **ornl_cnms_logo.png**: raw image file of CNMS logo which is embedded on GUI\
+
 ****: \
 ****: \
 ****: \
 <br>
-
-*IMES.py* also imports modules from the *IMES_libs* folder. These modules contain code for controlling instruments and ocnditoins inside the environmental chamber:\
+<br>
+*IMES.py* also imports modules from the *IMES_libs* folder. These modules contain code for controlling instruments and measurement conditions inside the environmental chamber:\
+<br>
 **cades.py**: module for communicating with CADES server at ORNL\
 **eis.py**: module for controlling Solartron 1260 impedance spectrometer\
 **jkem.py**: module for controlling J-KEM temperature controller\
