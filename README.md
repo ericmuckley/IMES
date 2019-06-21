@@ -19,16 +19,14 @@ While the IMES software is running, the output box in the lower left-hand corner
 ### Layout of the software
 
 The main *IMES.py* file calls a number of files:\
-
 **IMES_layout.ui**: the GUI layout file, which dictates where GUI objects are placed and their names\
 **libusb-1.0.dll**: a Windows USB library which may be required for communication with USB devices\
 **ornl_cnms_logo.png**: raw image file of CNMS logo which is embedded on GUI\
-**ornl_cnms_logo.py**: \
-**ornl_cnms_logo.qrc**: \
+**ornl_cnms_logo.qrc**: Qt resource file created from raw png image\
+**ornl_cnms_logo.py**: Python file freated from Qt resource file\
 <br>
 <br>
 *IMES.py* also imports modules from the *IMES_libs* folder. These modules contain code for controlling instruments and measurement conditions inside the environmental chamber:\
-
 **cades.py**: module for communicating with CADES server at ORNL\
 **eis.py**: module for controlling Solartron 1260 impedance spectrometer\
 **jkem.py**: module for controlling J-KEM temperature controller\
@@ -42,11 +40,13 @@ The main *IMES.py* file calls a number of files:\
 **sark.py**: module for controlling SARK-110 antenna analyzer for QCM measurements\
 **spec.py**: module for controlling Ocean Optics optical spectormeter\
 **vac.py**: module for controlling the vacuum pressure, valve, turbo pump, and mass flow controllers\
-
+<br>
+<br>
+Data is transferred between the main *IMES.py* script and the other modules using dictionaries which hold references to devices, front panel GUI objects, and measured parameters. There is a different dictionary associated with each module. For example, *vac_dict* holds information about the vacuum system and is used to communicate with the *vac.py* module, while *keith_dict* is used to transfer data to and from the *keith.py* module for controlling the Keithley multimeter. 
 
 
 ### Editing the software
 
-To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda*, and oen the *IMES_layout.ui* file. This is the editable layout file for designing the GUI. Front panel objects can be added, deleted and modified. New objects should be named according to their function, as referencing them in the code will require their name. For example, a new text box named *text_box5* will be referenced in the main GUI calss in *IMES.py* as `self.ui.text_box5`.
+To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda*, and open the *IMES_layout.ui* file. This is the editable layout file for designing the GUI. Front panel objects can be added, deleted and modified. New objects should be named according to their function, as referencing them in the code will require their name. For example, a new text box named *text_box5* will be referenced in the main GUI class in *IMES.py* as `self.ui.text_box5`.
 <br><br>
-*IMES.py* and other modules inside the *IMES_libs* folder are all editable. When changes are made to the GUI layout file, they must usually be accompanied by corresponding changes in the Python scripts. 
+*IMES.py* and other modules inside the *IMES_libs* folder are all editable. When changes are made to the GUI layout file, they should usually be accompanied by corresponding changes in the Python scripts. 
