@@ -51,7 +51,7 @@ class App(QMainWindow):  # create the main window
         self.ui = App.Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.move(100, 30)  # set initial position of the window
+        self.move(150, 150)  # set initial position of the window
 
         # create timer which updates fields on GUI (set interval in ms)
         self.timer = QtCore.QTimer(self)
@@ -402,7 +402,7 @@ class App(QMainWindow):  # create the main window
 
         self.eis_graph = realtimeplot.MakeGraph(
                 title='EIS', xlabel='Frequency (Hz)', ylabel='Z (Ohm)')
-
+   
         self.keith_graph_cv = realtimeplot.MakeGraph(
                 title='Keithley', xlabel='Voltage (V)', ylabel='Current (A)')
 
@@ -420,7 +420,7 @@ class App(QMainWindow):  # create the main window
             self.set_rh()
             if self.rh_dict['rh200_on'].isChecked():
                 if self.vac_dict['current_rh'] is not None:
-                    self.rh_graph.add_data([
+                    self.rh_graph.append_data([
                             self.ops_dict['elapsed_time'],
                             self.rh_dict['current_rh']])
                     self.rh_graph.show()
@@ -429,7 +429,7 @@ class App(QMainWindow):  # create the main window
             self.vac_main()
             if self.vac_dict['mks_on'].isChecked():
                 if self.vac_dict['current_pressure'] is not None:
-                    self.press_graph.add_data([
+                    self.press_graph.append_data([
                             self.ops_dict['elapsed_time'],
                             self.vac_dict['current_pressure']])
                     self.press_graph.show()

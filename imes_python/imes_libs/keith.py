@@ -227,7 +227,8 @@ def measure_iv(keith_dict, df, df_i):
         # read current
         current_list[v_i] = get_current(keith_dict['keith_dev'])
 
-        keith_dict['new_data'] = np.column_stack((iv_biases, current_list))
+        keith_dict['new_data'] = np.column_stack(
+                (iv_biases, current_list))[:v_i]
         keith_dict['actual_bias'].setText(str(np.round(v0, decimals=8)))
         keith_dict['current_display'].setText(
                 str(np.round(current_list[v_i], decimals=11)))
@@ -388,8 +389,9 @@ def measure_multi_cv(keith_dict, df, df_i):
             keith_dict['current_display'].setText(
                     str(np.round(current_list[v_i], decimals=11)))
 
-            keith_dict['new_data'] = np.column_stack((cv_biases, current_list))
-            print(keith_data['new_data'])
+            keith_dict['new_data'] = np.column_stack(
+                    (cv_biases, current_list))[:v_i]
+
         # append new data to C-V dataframe. first create empty cells to fill.
         # this is done so C-V curves with different lengths can be appended
         keith_dict['cv_df']['current_'+save_rate+iv_time] = np.repeat('', 1000)
