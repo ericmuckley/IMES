@@ -51,7 +51,7 @@ class App(QMainWindow):  # create the main window
         self.ui = App.Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.move(300, 30)  # set initial position of the window
+        self.move(100, 30)  # set initial position of the window
 
         # create timer which updates fields on GUI (set interval in ms)
         self.timer = QtCore.QTimer(self)

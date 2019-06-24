@@ -389,6 +389,7 @@ def measure_multi_cv(keith_dict, df, df_i):
                     str(np.round(current_list[v_i], decimals=11)))
 
             keith_dict['new_data'] = np.column_stack((cv_biases, current_list))
+            print(keith_data['new_data'])
         # append new data to C-V dataframe. first create empty cells to fill.
         # this is done so C-V curves with different lengths can be appended
         keith_dict['cv_df']['current_'+save_rate+iv_time] = np.repeat('', 1000)

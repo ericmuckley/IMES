@@ -1810,7 +1810,7 @@ border: 1px solid black;
            <string>Set start frequency of impedance spectrum.</string>
           </property>
           <property name="currentText">
-           <string>Ar</string>
+           <string>H2O</string>
           </property>
           <item>
            <property name="text">

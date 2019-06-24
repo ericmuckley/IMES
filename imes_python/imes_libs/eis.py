@@ -146,7 +146,7 @@ def measure_eis(eis_dict, df, df_i):
         imz = z * np.sin(phase_rad)
 
         results[i, :] = [f0_exp, z, phase_deg, rez, imz]
-
+        print(results[:i, :2])
         eis_dict['new_data'] = results[:i, :2]
 
         # display results on GUI

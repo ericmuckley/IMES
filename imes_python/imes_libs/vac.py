@@ -39,8 +39,10 @@ def turbo_checked(vac_dict):
 
 
 def operate_turbo(vac_dict, run_pump=False):
-    on_str = '02 16 00 10 18 00 00 00 00 00 00 04 01 00 00 00 00 00 00 00 00 00 00 19'
-    off_str = '02 16 00 10 18 00 00 00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00 18'
+    # turn trubo pump on/off and read pump rotor speed in Hz
+    first_half = '02 16 00 10 18 00 00 00 00 00 00 04 '
+    on_str = first_half + '01 00 00 00 00 00 00 00 00 00 00 19'
+    off_str = first_half + '00 00 00 00 00 00 00 00 00 00 00 18'
     if run_pump:
         # turn pump on
         vac_dict['turbo_dev'].write(bytes.fromhex(on_str))
@@ -132,17 +134,16 @@ def mfc1_checked(vac_dict):
             # initialize MFC
             mfc1 = serial.Serial(vac_dict['mfc1_address'].text(),
                                  19200, timeout=1.0)
-
             vac_dict['mfc1_dev'] = mfc1
             vac_dict['output_box'].append('MFC-1 connected successfully.')
-        except TimeoutError:
+        except AttributeError:
             vac_dict['output_box'].append('MFC-1 could not connect.')
             vac_dict['mfc1_on'].setChecked(False)
     if not vac_dict['mfc1_on'].isChecked():
         try:
             vac_dict['mfc1_dev'].close()
             vac_dict['output_box'].append('MFC-1 disconnected.')
-        except TimeoutError:
+        except AttributeError:
             pass
 
 
@@ -154,15 +155,15 @@ def mfc2_checked(vac_dict):
             mfc2 = serial.Serial(vac_dict['mfc2_address'].text(),
                                  19200, timeout=1.0)
             vac_dict['mfc2_dev'] = mfc2
-            vac_dict['output_box'].append('MFC-1 connected successfully.')
-        except TimeoutError:
+            vac_dict['output_box'].append('MFC-2 connected successfully.')
+        except AttributeError:
             vac_dict['output_box'].append('MFC-2 could not connect.')
             vac_dict['mfc2_on'].setChecked(False)
     if not vac_dict['mfc2_on'].isChecked():
         try:
             vac_dict['mfc2_dev'].close()
             vac_dict['output_box'].append('MFC-2 disconnected.')
-        except TimeoutError:
+        except AttributeError:
             pass
 
 
