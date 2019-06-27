@@ -397,6 +397,10 @@ class App(QMainWindow):  # create the main window
         self.qcm_graph = realtimeplot.MakeGraph(
                 title='QCM', xmax=1000, xlabel='Freq. (MHz)', ylabel='G (mS)')
 
+        self.qcm_fit_graph = realtimeplot.MakeGraph(
+                title='QCM fitting', xmax=1000,
+                xlabel='Freq. (MHz)', ylabel='G (mS)')
+
         self.rh_graph = realtimeplot.MakeGraph(
                 title='RH', xlabel='Time (min)', ylabel='RH (%)')
 
@@ -553,6 +557,9 @@ class App(QMainWindow):  # create the main window
             self.vac_dict['mfc2_dev'].close()
         if self.ui.turbo_on.isChecked():
             self.vac_dict['turbo_dev'].close()
+
+        
+
 
         if self.ui.create_report_on_quit.isChecked():
             try:

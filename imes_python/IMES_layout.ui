@@ -332,7 +332,7 @@ border: 1px solid black;
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>201</width>
+         <width>191</width>
          <height>161</height>
         </rect>
        </property>
@@ -1561,7 +1561,7 @@ border: 1px solid black;
       <rect>
        <x>10</x>
        <y>140</y>
-       <width>221</width>
+       <width>211</width>
        <height>274</height>
       </rect>
      </property>
@@ -1979,9 +1979,9 @@ border: 1px solid black;
     <widget class="QWidget" name="formLayoutWidget_4">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>190</x>
        <y>30</y>
-       <width>161</width>
+       <width>171</width>
        <height>72</height>
       </rect>
      </property>
@@ -2727,7 +2727,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>100000</number>
+          <number>10000</number>
          </property>
         </widget>
        </item>
@@ -2743,7 +2743,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>200000</number>
+          <number>15000</number>
          </property>
         </widget>
        </item>
@@ -2759,7 +2759,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>300000</number>
+          <number>20000</number>
          </property>
         </widget>
        </item>
@@ -2775,7 +2775,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>400000</number>
+          <number>25000</number>
          </property>
         </widget>
        </item>
@@ -2791,7 +2791,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>500000</number>
+          <number>30000</number>
          </property>
         </widget>
        </item>
@@ -2807,7 +2807,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>600000</number>
+          <number>35000</number>
          </property>
         </widget>
        </item>
@@ -2823,7 +2823,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>700000</number>
+          <number>40000</number>
          </property>
         </widget>
        </item>
@@ -2839,7 +2839,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>800000</number>
+          <number>45000</number>
          </property>
         </widget>
        </item>
@@ -2855,7 +2855,7 @@ border: 1px solid black;
           <number>1</number>
          </property>
          <property name="value">
-          <number>900000</number>
+          <number>50000</number>
          </property>
         </widget>
        </item>
@@ -3017,7 +3017,7 @@ border: 1px solid black;
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="vac_tab">
       <attribute name="title">
@@ -3281,7 +3281,7 @@ border: 1px solid black;
         <rect>
          <x>30</x>
          <y>160</y>
-         <width>201</width>
+         <width>211</width>
          <height>101</height>
         </rect>
        </property>
@@ -4961,7 +4961,7 @@ border: 1px solid black;
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>181</width>
+         <width>171</width>
          <height>31</height>
         </rect>
        </property>
@@ -5018,7 +5018,7 @@ border: 1px solid black;
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>161</width>
+          <width>151</width>
           <height>72</height>
          </rect>
         </property>
@@ -6290,11 +6290,14 @@ border: 1px solid black;
       <rect>
        <x>20</x>
        <y>30</y>
-       <width>211</width>
+       <width>201</width>
        <height>251</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="eis_control_form">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="eis_points_label">
         <property name="text">
