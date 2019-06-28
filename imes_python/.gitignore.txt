@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files in pycache folder
+__pycache__/
+*.pyc
+
+# folder with previous versions of code
+older_versions/
+
+# saved data files
+*.cvs
+# saved configuration files
+*.ini
