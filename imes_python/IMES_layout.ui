@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
-    <height>741</height>
+    <width>1015</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -299,9 +299,9 @@ border: 1px solid black;
     </property>
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>300</x>
       <y>10</y>
-      <width>241</width>
+      <width>261</width>
       <height>241</height>
      </rect>
     </property>
@@ -316,7 +316,7 @@ border: 1px solid black;
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>221</width>
+       <width>231</width>
        <height>201</height>
       </rect>
      </property>
@@ -332,7 +332,7 @@ border: 1px solid black;
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>191</width>
+         <width>201</width>
          <height>161</height>
         </rect>
        </property>
@@ -1468,7 +1468,7 @@ border: 1px solid black;
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>241</width>
+      <width>251</width>
       <height>421</height>
      </rect>
     </property>
@@ -1964,9 +1964,9 @@ border: 1px solid black;
     </property>
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>580</x>
       <y>370</y>
-      <width>381</width>
+      <width>421</width>
       <height>281</height>
      </rect>
     </property>
@@ -1979,9 +1979,9 @@ border: 1px solid black;
     <widget class="QWidget" name="formLayoutWidget_4">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>200</x>
        <y>30</y>
-       <width>171</width>
+       <width>201</width>
        <height>72</height>
       </rect>
      </property>
@@ -2061,7 +2061,7 @@ border: 1px solid black;
       <rect>
        <x>20</x>
        <y>110</y>
-       <width>341</width>
+       <width>381</width>
        <height>161</height>
       </rect>
      </property>
@@ -2076,7 +2076,7 @@ border: 1px solid black;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>327</width>
+        <width>367</width>
         <height>247</height>
        </rect>
       </property>
@@ -2867,7 +2867,7 @@ border: 1px solid black;
       <rect>
        <x>20</x>
        <y>30</y>
-       <width>141</width>
+       <width>161</width>
        <height>71</height>
       </rect>
      </property>
@@ -2955,7 +2955,7 @@ border: 1px solid black;
      <rect>
       <x>20</x>
       <y>450</y>
-      <width>241</width>
+      <width>251</width>
       <height>251</height>
      </rect>
     </property>
@@ -2998,9 +2998,9 @@ border: 1px solid black;
    <widget class="QGroupBox" name="env_control_box">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>580</x>
       <y>10</y>
-      <width>381</width>
+      <width>421</width>
       <height>341</height>
      </rect>
     </property>
@@ -3012,7 +3012,7 @@ border: 1px solid black;
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>351</width>
+       <width>391</width>
        <height>301</height>
       </rect>
      </property>
@@ -3028,7 +3028,7 @@ border: 1px solid black;
         <rect>
          <x>30</x>
          <y>10</y>
-         <width>281</width>
+         <width>311</width>
          <height>141</height>
         </rect>
        </property>
@@ -3281,7 +3281,7 @@ border: 1px solid black;
         <rect>
          <x>30</x>
          <y>160</y>
-         <width>211</width>
+         <width>261</width>
          <height>101</height>
         </rect>
        </property>
@@ -3293,7 +3293,7 @@ border: 1px solid black;
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>181</width>
+          <width>231</width>
           <height>72</height>
          </rect>
         </property>
@@ -4961,7 +4961,7 @@ border: 1px solid black;
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>171</width>
+         <width>201</width>
          <height>31</height>
         </rect>
        </property>
@@ -5006,7 +5006,7 @@ border: 1px solid black;
         <rect>
          <x>10</x>
          <y>60</y>
-         <width>181</width>
+         <width>201</width>
          <height>101</height>
         </rect>
        </property>
@@ -5018,7 +5018,7 @@ border: 1px solid black;
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>151</width>
+          <width>171</width>
           <height>72</height>
          </rect>
         </property>
@@ -5103,7 +5103,7 @@ border: 1px solid black;
       <widget class="QTableWidget" name="rh_table">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>230</x>
          <y>10</y>
          <width>141</width>
          <height>251</height>
@@ -6153,9 +6153,9 @@ border: 1px solid black;
    <widget class="QGroupBox" name="optical_box">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>580</y>
-      <width>241</width>
+      <width>271</width>
       <height>121</height>
      </rect>
     </property>
@@ -6167,7 +6167,7 @@ border: 1px solid black;
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>202</width>
+       <width>231</width>
        <height>82</height>
       </rect>
      </property>
@@ -6276,9 +6276,9 @@ border: 1px solid black;
    <widget class="QGroupBox" name="impedance_box">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>290</x>
       <y>270</y>
-      <width>241</width>
+      <width>271</width>
       <height>291</height>
      </rect>
     </property>
@@ -6290,7 +6290,7 @@ border: 1px solid black;
       <rect>
        <x>20</x>
        <y>30</y>
-       <width>201</width>
+       <width>221</width>
        <height>251</height>
       </rect>
      </property>
@@ -6634,7 +6634,7 @@ border: 1px solid black;
    <widget class="QLabel" name="ORNL_logo">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>670</x>
       <y>660</y>
       <width>291</width>
       <height>41</height>
@@ -6650,7 +6650,7 @@ border: 1px solid black;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>944</width>
+     <width>1015</width>
      <height>24</height>
     </rect>
    </property>

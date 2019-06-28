@@ -179,7 +179,7 @@ class App(QMainWindow):  # create the main window
         self.optical_df = pd.DataFrame()
         self.qcm_data = {str(i): pd.DataFrame() for i in range(1, 19, 2)}
         self.qcm_data['params'] = pd.DataFrame(
-                data=np.full((100000, 19), ''),
+                data=np.full((10000, 19), ''),
                 columns=['time', 'f_1', 'f_3', 'f_5', 'f_7', 'f_9',
                          'f_11', 'f_13', 'f_15', 'f_17',
                          'd_1', 'd_3', 'd_5', 'd_7', 'd_9',
@@ -423,7 +423,7 @@ class App(QMainWindow):  # create the main window
             # set and measure RH
             self.set_rh()
             if self.rh_dict['rh200_on'].isChecked():
-                if self.vac_dict['current_rh'] is not None:
+                if self.rh_dict['current_rh'] is not None:
                     self.rh_graph.append_data([
                             self.ops_dict['elapsed_time'],
                             self.rh_dict['current_rh']])
