@@ -3017,7 +3017,7 @@ border: 1px solid black;
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="vac_tab">
       <attribute name="title">
@@ -3752,7 +3752,7 @@ border: 1px solid black;
        </column>
        <item row="0" column="0">
         <property name="text">
-         <string>.2</string>
+         <string>2</string>
         </property>
        </item>
        <item row="0" column="1">
@@ -3762,17 +3762,17 @@ border: 1px solid black;
        </item>
        <item row="0" column="2">
         <property name="text">
-         <string>2</string>
+         <string>0</string>
         </property>
        </item>
        <item row="0" column="3">
         <property name="text">
-         <string>3</string>
+         <string>0</string>
         </property>
        </item>
        <item row="1" column="0">
         <property name="text">
-         <string>.2</string>
+         <string>2</string>
         </property>
        </item>
        <item row="1" column="1">
@@ -3782,17 +3782,17 @@ border: 1px solid black;
        </item>
        <item row="1" column="2">
         <property name="text">
-         <string>4</string>
+         <string>20</string>
         </property>
        </item>
        <item row="1" column="3">
         <property name="text">
-         <string>6</string>
+         <string>0</string>
         </property>
        </item>
        <item row="2" column="0">
         <property name="text">
-         <string>.2</string>
+         <string>2</string>
         </property>
        </item>
        <item row="2" column="1">
@@ -3802,17 +3802,17 @@ border: 1px solid black;
        </item>
        <item row="2" column="2">
         <property name="text">
-         <string>6</string>
+         <string>20</string>
         </property>
        </item>
        <item row="2" column="3">
         <property name="text">
-         <string>9</string>
+         <string>0</string>
         </property>
        </item>
        <item row="3" column="0">
         <property name="text">
-         <string>.2</string>
+         <string>2</string>
         </property>
        </item>
        <item row="3" column="1">
@@ -3822,12 +3822,12 @@ border: 1px solid black;
        </item>
        <item row="3" column="2">
         <property name="text">
-         <string>8</string>
+         <string>20</string>
         </property>
        </item>
        <item row="3" column="3">
         <property name="text">
-         <string>12</string>
+         <string>0</string>
         </property>
        </item>
        <item row="4" column="0">

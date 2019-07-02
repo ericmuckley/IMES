@@ -28,15 +28,18 @@ import matplotlib.pyplot as plt
 
 def turbo_checked(vac_dict):
     # run this function when turbo pump checkbox is checked/unchecked on GUI
-    if vac_dict['turbo_on'].isChecked():
-        vac_dict['turbo_dev'] = serial.Serial(
-                vac_dict['turbo_address'].text(), 19200, timeout=1.0)
-        vac_dict['output_box'].append('Turbo pump connected')
-
-    if not vac_dict['turbo_on'].isChecked():
-        vac_dict['turbo_dev'].close()
-        vac_dict['output_box'].append('Turbo pump disconnected')
-
+    if vac_dict['mks_on'].isChecked():
+        if vac_dict['turbo_on'].isChecked():
+            vac_dict['turbo_dev'] = serial.Serial(
+                    vac_dict['turbo_address'].text(), 19200, timeout=1.0)
+            vac_dict['output_box'].append('Turbo pump connected')
+        if not vac_dict['turbo_on'].isChecked():
+            vac_dict['turbo_dev'].close()
+            vac_dict['output_box'].append('Turbo pump disconnected')
+    else:
+        vac_dict['output_box'].append(
+                'Pressure controller must be on to run turbo pump.')
+        vac_dict['turbo_on'].setChecked(False)
 
 def operate_turbo(vac_dict, run_pump=False):
     # turn trubo pump on/off and read pump rotor speed in Hz
