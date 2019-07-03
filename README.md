@@ -6,7 +6,7 @@ This repository contains software for controlling the integrated multifunctional
 
 The software requires no formal installation, but installation of missing Python libraries will likely be required when running the software for the first time. To download the missing libraries, it is recommended to use the scientific Python distribution *Anaconda* (https://www.anaconda.com/). If *Anaconda* is not present on the local PC, download it from its website and download the *imes_python* folder in this repository to the local PC and unzip it.
 <br><br>
-To avoid installing individual libraries, the complete Python installation which includes all necessary packages can be downloaded from Anaconda Cloud (https://anaconda.org/ericmuckley/imes_env).
+To avoid installing individual libraries, the complete Python installation which includes all necessary packages can be downloaded from Anaconda Cloud (https://anaconda.org/ericmuckley/imes_env_july2019).
 
 ### Running the software
 
