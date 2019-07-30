@@ -29,7 +29,7 @@ QStatusBar{background: rgb(50, 50, 50);}
 QMenu {
 border: 1px solid black;
 color: white;
-background: rgb(50, 50, 50);}
+background: rgb(30, 40, 50);}
 
 QMenu::item:hover { 
 background: black;}
@@ -38,7 +38,7 @@ QMenu::item:selected {
 background: black;}
 
 QMenuBar{
-background: rgb(50, 50, 50);
+background: rgb(30, 40, 50);
 spacing: 12px;
 color: white;
 font-size:16px;}
@@ -129,7 +129,7 @@ background-color: black;}
 
 
 QTableWidget{
-background-color:rgb(65, 70, 80);
+background-color:rgb(30, 40, 50);
 font-size: 12px;
 color: white
 }
@@ -271,7 +271,7 @@ border: 1px solid black;
 background:  black;}
 
 QRadioButton::indicator::checked, QCheckBox::indicator::checked {
-border: 1px solid white;
+border: rgb(200, 200, 200);;
 background: rgb(200, 200, 200);}
 
 QRadioButton::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover {
@@ -1810,7 +1810,7 @@ border: 1px solid black;
            <string>Set start frequency of impedance spectrum.</string>
           </property>
           <property name="currentText">
-           <string>H2O</string>
+           <string>Ar</string>
           </property>
           <item>
            <property name="text">

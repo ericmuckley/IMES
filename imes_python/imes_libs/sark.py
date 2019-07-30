@@ -461,23 +461,23 @@ def find_resonances(sark_dict):
     sark_dict['sark_busy'] = True
     sark_dict['measure_bands'].setEnabled(False)
     sark_dict['find_resonances'].setEnabled(False)
+    measure_time = time.strftime('%Y-%m-%d_%H-%M-%S_')
+    
     # loop through each selected harmonic
     for n in n_list:
-
         band_start_time = time.time()
-        sark_dict['output_box'].append(
-                'Searching for n = '+str(n)+' resonance...')
+        sark_dict['output_box'].append('Searching for n = '+str(n)+' peak...')
         # estimate band location based on harmonic number
         bandcenter = int(sark_dict['set_f0'].value())*1e6*n - (5e4*n)
         bandwidth = 200000*n
 
         spec = measure_band(sark_dict, bandcenter, bandwidth)
+        # save QCM data to file, fit spectrum to Butterworth van Dyke circuit
+        f0, D = save_qcm_data(sark_dict, measure_time, n, spec)
 
-        # get resonant frequency of band
-        f0 = spec[np.argmax(spec[:, 1]), 0]
+        # update GUI displays
         sark_dict['output_box'].append(
                 'n = '+str(n)+' resonance found at '+str(int(f0))+' Hz')
-        # update GUI displays
         sark_dict['bc_fields'][str(n)].setValue(int(f0))
         sark_dict['f0_displays'][str(n)].setText(str(int(f0)))
         # suggested bandwidths to populate GUI with
@@ -507,8 +507,8 @@ def measure_bands(sark_dict):
 
     # loop through each selected harmonic
     for n in n_list:
-        sark_dict['output_box'].append('Measuring n='+str(n)+' band...')
         band_start_time = time.time()
+        sark_dict['output_box'].append('Measuring n='+str(n)+' band...')
         bandcenter = int(sark_dict['bc_fields'][str(n)].value())
         bandwidth = int(sark_dict['bw_fields'][str(n)].value())
         spec = measure_band(sark_dict, bandcenter, bandwidth)
