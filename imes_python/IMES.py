@@ -316,6 +316,7 @@ class App(QMainWindow):  # create the main window
                 'iv_df': self.iv_df,
                 'cv_df': self.cv_df,
                 'bs_df': self.bs_df,
+                'keith_seq_running': False,
                 'set_bias': self.ui.set_bias,
                 'max_bias': self.ui.max_bias,
                 'keith_busy': self.keith_busy,
@@ -406,7 +407,7 @@ class App(QMainWindow):  # create the main window
 
         self.eis_graph = realtimeplot.MakeGraph(
                 title='EIS', xlabel='Frequency (Hz)', ylabel='Z (Ohm)')
-   
+
         self.keith_graph_cv = realtimeplot.MakeGraph(
                 title='Keithley', xlabel='Voltage (V)', ylabel='Current (A)')
 
@@ -557,9 +558,6 @@ class App(QMainWindow):  # create the main window
             self.vac_dict['mfc2_dev'].close()
         if self.ui.turbo_on.isChecked():
             self.vac_dict['turbo_dev'].close()
-
-        
-
 
         if self.ui.create_report_on_quit.isChecked():
             try:

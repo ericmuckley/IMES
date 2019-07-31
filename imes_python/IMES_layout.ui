@@ -451,10 +451,10 @@ border: 1px solid black;
         <item row="3" column="1">
          <widget class="QLineEdit" name="cv_sweep_rates">
           <property name="text">
-           <string>1, 0.5, 0.1</string>
+           <string>0.3, 0.1, 0.05</string>
           </property>
           <property name="placeholderText">
-           <string>1, 0.5, 0.1</string>
+           <string>0.3, 0.1, 0.05</string>
           </property>
          </widget>
         </item>
@@ -3017,7 +3017,7 @@ border: 1px solid black;
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="vac_tab">
       <attribute name="title">
@@ -6660,7 +6660,7 @@ border: 1px solid black;
     </property>
     <widget class="QMenu" name="menuQuit_PLEASE_DISCONNECT_INSTRUMENTS_FIRST">
      <property name="title">
-      <string>Quit - Please disconnect instuments first</string>
+      <string>Quit - CLOSE ALL INSTUMENTS AND PLOTS FIRST</string>
      </property>
      <addaction name="file_quit"/>
     </widget>

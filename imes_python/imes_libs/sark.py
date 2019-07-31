@@ -462,7 +462,7 @@ def find_resonances(sark_dict):
     sark_dict['measure_bands'].setEnabled(False)
     sark_dict['find_resonances'].setEnabled(False)
     measure_time = time.strftime('%Y-%m-%d_%H-%M-%S_')
-    
+
     # loop through each selected harmonic
     for n in n_list:
         band_start_time = time.time()

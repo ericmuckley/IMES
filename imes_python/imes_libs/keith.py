@@ -23,7 +23,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import cm
-import visa
 from pymeasure.instruments.keithley import Keithley2400
 fontsize = 12
 
@@ -102,15 +101,16 @@ def checked(keith_dict):
             keith_dict['menu_electrical'].setEnabled(True)
             keith_dict['keith_address'].setEnabled(False)
             keith_dict['output_box'].append('Keithley connected.')
-        except visa.VISAIOERROR:
+        except:
             keith_dict['output_box'].append('Keithley could not connect.')
+            keith_dict['output_box'].append('Try checking address and cable.')
             keith_dict['keithley_on'].setChecked(False)
 
     if not keith_dict['keithley_on'].isChecked():  # if checkbox was unchecked
         keith_dict['keithley_on'].setChecked(False)
         try:
             close(keith_dict['keith_dev'])
-        except visa.VISAIOERROR:
+        except:
             pass
         keith_dict['electrical_box'].setEnabled(False)
         keith_dict['menu_electrical'].setEnabled(False)
@@ -212,7 +212,6 @@ def measure_iv(keith_dict, df, df_i):
     keith_dict['max_bias'].setEnabled(False)
     keith_dict['voltage_steps'].setEnabled(False)
     keith_dict['keith_busy'] = True
-
     iv_biases, _ = get_bias_voltages(float(keith_dict['max_bias'].value()),
                                      int(keith_dict['voltage_steps'].value()))
     current_list = np.empty_like(iv_biases)
@@ -245,9 +244,7 @@ def measure_iv(keith_dict, df, df_i):
     keith_dict['voltage_steps'].setEnabled(True)
     keith_dict['measure_bias_seq_now'].setEnabled(True)
     keith_dict['measure_current_now'].setEnabled(True)
-    keith_dict['keith_busy'] = False
     keith_dict['new_data'] = None
-
     # append new data to I-V dataframe. first create empty cells to fill.
     # this is done so I-V curves with different lengths can be appended
     keith_dict['iv_df']['bias_'+iv_time] = np.repeat('', 99)
@@ -261,11 +258,13 @@ def measure_iv(keith_dict, df, df_i):
     keith_dict['iv_df'].to_csv(
             keith_dict['save_file_dir']+'/'+keith_dict[
                                         'start_date']+'_iv.csv', index=False)
-
     # save max current to main df
     max_current = np.amax(current_list)
     df['max_iv_current'].iloc[df_i] = str(max_current)
-
+    if keith_dict['keith_seq_running'] is True:
+        pass
+    else:
+        keith_dict['keith_busy'] = False
     # view_iv_data(keith_dict)
     # plt.pause(2)
     # plt.close()
@@ -282,7 +281,6 @@ def measure_cv(keith_dict, df, df_i):
     keith_dict['voltage_steps'].setEnabled(False)
     keith_dict['keith_busy'] = True
     keith_dict['new_data'] = None
-
     _, cv_biases = get_bias_voltages(float(keith_dict['max_bias'].value()),
                                      int(keith_dict['voltage_steps'].value()))
     current_list = np.empty_like(cv_biases)
@@ -299,12 +297,10 @@ def measure_cv(keith_dict, df, df_i):
         keith_dict['actual_bias'].setText(str(np.round(v0, decimals=8)))
         keith_dict['current_display'].setText(
                 str(np.round(current_list[v_i], decimals=11)))
-
     keith_dict['output_box'].append('C-V measurement complete.')
     remove_bias(keith_dict)
     keith_dict['actual_bias'].setText('0')
     keith_dict['current_display'].setText('--')
-
     keith_dict['measure_iv_now'].setEnabled(True)
     keith_dict['measure_cv_now'].setEnabled(True)
     keith_dict['set_bias'].setEnabled(True)
@@ -312,9 +308,7 @@ def measure_cv(keith_dict, df, df_i):
     keith_dict['voltage_steps'].setEnabled(True)
     keith_dict['measure_current_now'].setEnabled(True)
     keith_dict['measure_bias_seq_now'].setEnabled(True)
-    keith_dict['keith_busy'] = False
     keith_dict['new_data'] = None
-
     # append new data to C-V dataframe. first create empty cells to fill.
     # this is done so C-V curves with different lengths can be appended
     keith_dict['cv_df']['bias_'+iv_time] = np.repeat('', 1000)
@@ -333,6 +327,10 @@ def measure_cv(keith_dict, df, df_i):
     capacitance, max_cv_current = get_capacitance(cv_biases, current_list)
     df['cv_area'].iloc[df_i] = str(capacitance)
     df['max_cv_current'].iloc[df_i] = str(max_cv_current)
+    if keith_dict['keith_seq_running'] is True:
+        pass
+    else:
+        keith_dict['keith_busy'] = False
 
 
 def get_sweep_rates(keith_dict):
@@ -353,19 +351,15 @@ def measure_multi_cv(keith_dict, df, df_i):
     keith_dict['max_bias'].setEnabled(False)
     keith_dict['voltage_steps'].setEnabled(False)
     keith_dict['keith_busy'] = True
-
     _, cv_biases = get_bias_voltages(float(keith_dict['max_bias'].value()),
                                      int(keith_dict['voltage_steps'].value()))
-
     keith_dict['output_box'].append('Measuring C-V...')
     iv_time = time.strftime('%Y-%m-%d_%H-%M-%S_')
-
     # get sweep rates
     rates_list = get_sweep_rates(keith_dict)
     # calculate appropriate delays per point to result in the sweep rates
     delta_v = cv_biases[1] - cv_biases[0]
     delays = [delta_v / rate for rate in rates_list]
-
     # append new data to C-V dataframe. first create empty cells to fill.
     # this is done so C-V curves with different lengths can be appended
     keith_dict['cv_df']['bias_'+iv_time] = np.repeat('', 1000)
@@ -401,7 +395,6 @@ def measure_multi_cv(keith_dict, df, df_i):
     keith_dict['cv_df'].to_csv(
             keith_dict['save_file_dir']+'/'+keith_dict[
                                         'start_date']+'_cv.csv', index=False)
-
     # save capacitance to main df
     capacitance, max_cv_current = get_capacitance(cv_biases, current_list)
     df['cv_area'].iloc[df_i] = str(capacitance)
@@ -417,8 +410,11 @@ def measure_multi_cv(keith_dict, df, df_i):
     keith_dict['voltage_steps'].setEnabled(True)
     keith_dict['measure_current_now'].setEnabled(True)
     keith_dict['measure_bias_seq_now'].setEnabled(True)
-    keith_dict['keith_busy'] = False
     keith_dict['new_data'] = None
+    if keith_dict['keith_seq_running'] is True:
+        pass
+    else:
+        keith_dict['keith_busy'] = False
 
 
 def get_capacitance(biases, currents):
@@ -615,7 +611,7 @@ def measure_bias_seq(keith_dict, df, df_i):
     keith_dict['set_bias'].setEnabled(False)
     keith_dict['max_bias'].setEnabled(False)
     keith_dict['voltage_steps'].setEnabled(False)
-
+    keith_dict['keith_busy'] = True
     # create empty array to hold measured data
     bs_results = np.empty((0, 3))
     bs_time = time.strftime('%Y-%m-%d_%H-%M-%S_')
@@ -645,7 +641,6 @@ def measure_bias_seq(keith_dict, df, df_i):
     remove_bias(keith_dict)
     keith_dict['actual_bias'].setText('0')
     keith_dict['current_display'].setText('--')
-
     keith_dict['output_box'].append('Bias sequence complete.')
     keith_dict['measure_iv_now'].setEnabled(True)
     keith_dict['measure_cv_now'].setEnabled(True)
@@ -669,6 +664,10 @@ def measure_bias_seq(keith_dict, df, df_i):
     keith_dict['bs_df'].to_csv(
             keith_dict['save_file_dir']+'/'+keith_dict[
                     'start_date']+'_bs.csv', index=False)
+    if keith_dict['keith_seq_running'] is True:
+        pass
+    else:
+        keith_dict['keith_busy'] = False
     # view_bs_data(keith_dict)
     # plt.pause(2)
     # plt.close()
@@ -677,6 +676,7 @@ def measure_bias_seq(keith_dict, df, df_i):
 def keith_rh_seq(keith_dict, df, df_i):
     # measure keithley functions during RH sequence
     keith_dict['keith_busy'] = True
+    keith_dict['keith_seq_running'] = True
     if keith_dict['iv_rh_seq'].isChecked():
         measure_iv(keith_dict, df, df_i)
         time.sleep(2)
@@ -688,11 +688,13 @@ def keith_rh_seq(keith_dict, df, df_i):
         time.sleep(2)
     time.sleep(float(keith_dict['pause_after_cycle'].value())*60)
     keith_dict['keith_busy'] = False
+    keith_dict['keith_seq_running'] = False
 
 
 def keith_vac_seq(keith_dict, df, df_i):
     # measure keithley functions during vacuum sequence
     keith_dict['keith_busy'] = True
+    keith_dict['keith_seq_running'] = True
     if keith_dict['iv_vac_seq'].isChecked():
         measure_iv(keith_dict, df, df_i)
         keith_dict['keith_busy'] = True
@@ -707,6 +709,7 @@ def keith_vac_seq(keith_dict, df, df_i):
         time.sleep(2)
     time.sleep(float(keith_dict['pause_after_cycle'].value())*60)
     keith_dict['keith_busy'] = False
+    keith_dict['keith_seq_running'] = False
 
 
 if __name__ == '__main__':
