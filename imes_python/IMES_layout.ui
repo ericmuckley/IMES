@@ -1685,7 +1685,7 @@ border: 1px solid black;
          <string>Set address of the Keithley 2400 multimeter.</string>
         </property>
         <property name="text">
-         <string>GPIB2::24</string>
+         <string>GPIB0::25</string>
         </property>
         <property name="placeholderText">
          <string>GPIB::24</string>

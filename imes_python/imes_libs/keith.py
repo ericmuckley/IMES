@@ -247,8 +247,8 @@ def measure_iv(keith_dict, df, df_i):
     keith_dict['new_data'] = None
     # append new data to I-V dataframe. first create empty cells to fill.
     # this is done so I-V curves with different lengths can be appended
-    keith_dict['iv_df']['bias_'+iv_time] = np.repeat('', 99)
-    keith_dict['iv_df']['current_'+iv_time] = np.repeat('', 99)
+    keith_dict['iv_df']['bias_'+iv_time] = np.repeat('', 999)
+    keith_dict['iv_df']['current_'+iv_time] = np.repeat('', 999)
     # now fill empty cells with new data
     keith_dict['iv_df']['bias_'+iv_time].iloc[
                                     :len(iv_biases)] = iv_biases.astype(str)
