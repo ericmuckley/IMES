@@ -664,7 +664,7 @@ def measure_bias_seq(keith_dict, df, df_i):
     keith_dict['bs_df'].to_csv(
             keith_dict['save_file_dir']+'/'+keith_dict[
                     'start_date']+'_bs.csv', index=False)
-    if keith_dict['keith_seq_running'] is True:
+    if keith_dict['keith_seq_running']:
         pass
     else:
         keith_dict['keith_busy'] = False
@@ -684,6 +684,24 @@ def keith_rh_seq(keith_dict, df, df_i):
         measure_multi_cv(keith_dict, df, df_i)
         time.sleep(2)
     if keith_dict['bs_rh_seq'].isChecked():
+        measure_bias_seq(keith_dict, df, df_i)
+        time.sleep(2)
+    time.sleep(float(keith_dict['pause_after_cycle'].value())*60)
+    keith_dict['keith_busy'] = False
+    keith_dict['keith_seq_running'] = False
+
+
+def keith_syr_seq(keith_dict, df, df_i):
+    # measure keithley functions during RH sequence
+    keith_dict['keith_busy'] = True
+    keith_dict['keith_seq_running'] = True
+    if keith_dict['iv_syr_seq'].isChecked():
+        measure_iv(keith_dict, df, df_i)
+        time.sleep(2)
+    if keith_dict['cv_syr_seq'].isChecked():
+        measure_multi_cv(keith_dict, df, df_i)
+        time.sleep(2)
+    if keith_dict['bs_syr_seq'].isChecked():
         measure_bias_seq(keith_dict, df, df_i)
         time.sleep(2)
     time.sleep(float(keith_dict['pause_after_cycle'].value())*60)

@@ -11,6 +11,7 @@ from imes_libs import keith  # Keithley 2400 source-measure unit
 from imes_libs import rhmeter  # RH / temp meter
 from imes_libs import sark  # SARK-110 antenna analyzer for QCM measurements
 from imes_libs import rh200  # RH-200 relative humidity generator
+from imes_libs import syr # module for syringe pump control
 from imes_libs import eis  # Solartron 1260 vector impedance analyzer
 from imes_libs import vac  # insruments for controlling vacuum chamber
 from imes_libs import realtimeplot  # module for realtime plots in pyqtgraph
@@ -41,8 +42,7 @@ ornl_cnms_logo
 class App(QMainWindow):  # create the main window
 
     # path of the .ui Qt designer file to set up GUI
-    #ui_layout = 'C:\\Users\\Marek\\Drive\\Oak Ridge\\Experiment\\Control programs\\IMES-master\\imes_python\\IMES_layout.ui'
-    ui_layout = 'D:\\Zaloha drive\\Oak Ridge\\Experiment\\Control programs\\IMES-master\\imes_python\\IMES_layout.ui'
+    ui_layout = 'C:\\Users\\ilia\\IMES\\imes_python\\IMES_layout_syr.ui'
 
     # load Qt designer XML .ui GUI file
     Ui_MainWindow, QtBaseClass = uic.loadUiType(ui_layout)
@@ -87,6 +87,19 @@ class App(QMainWindow):  # create the main window
         self.ui.clear_rh_seq.triggered.connect(self.clear_rh_seq)
         self.ui.export_rh_seq.triggered.connect(self.export_rh_seq)
         self.ui.import_rh_seq.triggered.connect(self.import_rh_seq)
+        # syringe menu items
+        self.ui.plot_syr_now.triggered.connect(self.plot_syr)
+        self.ui.run_syr_seq.triggered.connect(self.run_syr_seq)
+        self.ui.stop_syr_seq.triggered.connect(self.stop_syr_seq)
+        self.ui.plot_syr_seq.triggered.connect(self.plot_syr_seq)
+        self.ui.clear_syr_seq.triggered.connect(self.clear_syr_seq)
+        self.ui.export_syr_seq.triggered.connect(self.export_syr_seq)
+        self.ui.import_syr_seq.triggered.connect(self.import_syr_seq)
+        # syringe pump tab items
+        self.ui.syr_calc.clicked.connect(self.calc_flow)
+        self.ui.syr_infuse.stateChanged.connect(self.syr_infuse)
+        self.ui.syr_fix_car_flow.stateChanged.connect(self.syr_fix_car_flow)
+        
         # DC electrical menu items
         self.ui.plot_current.triggered.connect(self.plot_current)
         self.ui.measure_iv_now.triggered.connect(self.measure_iv)
@@ -129,7 +142,7 @@ class App(QMainWindow):  # create the main window
 
         # assign actions to checkboxes
         # example: self.ui.CHECKBOX.stateChanged.connect(self.FUNCTION_NAME)
-        # self.ui.rhmeter_on.stateChanged.connect(self.rhmeter_checked)
+        self.ui.rhmeter_on.stateChanged.connect(self.rhmeter_checked)
         self.ui.eis_on.stateChanged.connect(self.eis_checked)
         self.ui.mks_on.stateChanged.connect(self.mks_checked)
         self.ui.sark_on.stateChanged.connect(self.sark_checked)
@@ -138,6 +151,7 @@ class App(QMainWindow):  # create the main window
         self.ui.mfc2_on.stateChanged.connect(self.mfc2_checked)
         self.ui.turbo_on.stateChanged.connect(self.turbo_checked)
         self.ui.rh200_on.stateChanged.connect(self.rh200_checked)
+        self.ui.syr_on.stateChanged.connect(self.syr_checked)
         self.ui.keithley_on.stateChanged.connect(self.keithley_checked)
 
         # initialize some settings
@@ -148,22 +162,27 @@ class App(QMainWindow):  # create the main window
         self.rhmeter_dev = None
         self.rh_task_dict = None
         self.rh_seq_running = False
+        self.infusing = False
+        self.syr_seq_running = False
         self.vac_seq_running = False
         self.ui.qcm_box.setEnabled(False)
         # self.ui.menu_vacuum.setEnabled(False)
         self.ui.electrical_box.setEnabled(False)
         self.ui.menu_electrical.setEnabled(False)
+        self.ui.set_rh.setEnabled(True)
         self.ui.start_eis_freq.setCurrentIndex(0)
         self.ui.end_eis_freq.setCurrentIndex(6)
-
+        self.ui.run_syr_seq.setEnabled(False)
+        self.ui.syr_infuse.setEnabled(False)
+        
         # master dataframe to hold all pressure data
         self.df = pd.DataFrame(
                 columns=['date', 'time', 'pressure', 'pressure_setpoint',
-                         'mfc1', 'mfc2', 'rh', 'rh_setpoint',
+                         'mfc1', 'mfc2', 'rh', 'rh_setpoint', 'anl_conc', 'syr_flow',
                          'temp', 'bias', 'current', 'max_iv_current',
                          'max_cv_current', 'cv_area', 'low_freq_z',
                          'note', 'save'],
-                data=np.full((100000, 17), '', dtype=str))
+                data=np.full((100000, 19), '', dtype=str))
 
         # initialize file-saving variables
         self.df_i = 0
@@ -267,7 +286,37 @@ class App(QMainWindow):  # create the main window
                 'tot_rh_seq_time': self.ui.tot_rh_seq_time,
                 'elapsed_rh_seq_time': self.ui.elapsed_rh_seq_time,
                 'seq_end_time_display': self.ui.seq_end_time_display}
-
+        
+        # dictionary to hold PHD2000 infuse syringe pump related items
+        self.syr_dict = {
+                'syr_pump': None,
+                'syr_chain': None,
+                'syr_on': self.ui.syr_on,
+                'infusing': self.infusing,
+                'mfc1_sp': self.ui.mfc1_sp,   # a duplicate of the vac_dict item
+                'mfc2_sp': self.ui.mfc2_sp,   # a duplicate of the vac_dict item
+                'menu_syr': self.ui.menu_syr,
+                'syr_table': self.ui.syr_table,
+                'infuse_on': self.ui.syr_infuse,
+                'output_box': self.ui.output_box,
+                'tot_syr_vol': self.ui.tot_syr_vol,
+                'run_syr_seq': self.ui.run_syr_seq,
+                'syr_address': self.ui.syr_address,
+                'syr_seq_step': self.ui.syr_seq_step,
+                'save_data_now': self.ui.save_data_now,
+                'syr_seq_running': self.syr_seq_running,
+                'tot_flow_set': self.ui.tot_flow_set,
+                'wet_rat_set': self.ui.wet_rat_set,
+                'syr_conc_set': self.ui.syr_conc_set,
+                'anl_conc_set': self.ui.anl_conc_set,
+                'syr_flow_display': self.ui.syr_flow_display,
+                'mfc1_flow_display': self.ui.mfc1_flow_display,
+                'mfc2_flow_display': self.ui.mfc2_flow_display,
+                'tot_syr_seq_time': self.ui.tot_syr_seq_time,
+                'syr_fix_car_flow': self.ui.syr_fix_car_flow,
+                'elapsed_syr_seq_time': self.ui.elapsed_syr_seq_time,
+                'seq_end_time_display': self.ui.syr_seq_end_time_display}
+        
         # dictionary to hold Solartron 1260 impedancee analyzer related items
         self.eis_dict = {
                 'eis_dev': None,
@@ -321,9 +370,13 @@ class App(QMainWindow):  # create the main window
                 'max_bias': self.ui.max_bias,
                 'keith_busy': self.keith_busy,
                 'start_date': self.start_date,
+                'keith_seq_running': False,
                 'iv_rh_seq': self.ui.iv_rh_seq,
                 'cv_rh_seq': self.ui.cv_rh_seq,
                 'bs_rh_seq': self.ui.bs_rh_seq,
+                'iv_syr_seq': self.ui.iv_syr_seq,
+                'cv_syr_seq': self.ui.cv_syr_seq,
+                'bs_syr_seq': self.ui.bs_syr_seq,
                 'iv_vac_seq': self.ui.iv_vac_seq,
                 'cv_vac_seq': self.ui.cv_vac_seq,
                 'bs_vac_seq': self.ui.bs_vac_seq,
@@ -429,6 +482,18 @@ class App(QMainWindow):  # create the main window
                             self.ops_dict['elapsed_time'],
                             self.rh_dict['current_rh']])
                     self.rh_graph.show()
+                    
+            # set syringe flow
+            self.set_flow()
+            
+            # measure RH by logger
+            if self.ui.rhmeter_on.isChecked() and self.rhmeter_dev != None:
+                resp = rhmeter.read(self.rhmeter_dev)
+                self.df['rh'].iloc[self.df_i], self.df['temp'].iloc[self.df_i] = resp
+                self.ui.rhmeter_rh_value.setText(str(resp[0]))
+                self.ui.rhmeter_temp_value.setText(str(resp[1]))
+           #     if self.df_i % 10 == 0:
+           #         print(resp)
 
             # control and measure vacuum chamber pressure and plot pressure
             self.vac_main()
@@ -505,7 +570,28 @@ class App(QMainWindow):  # create the main window
                 if self.ui.optical_rh_seq.isChecked():
                     if not self.spec_dict['spec_busy']:
                         self.optical_rh_seq()
+            
+            # ################################################################
+            # ------ control functionality when syringe sequence is running --
+            # ################################################################
+            if self.syr_dict['syr_seq_running']:
 
+                #run Keithley functions for syringe sequence
+                self.keith_syr_seq()
+
+                # run impedance spectroscopy
+                self.eis_rh_seq()
+
+                # measure QCM
+                if self.ui.qcm_syr_seq.isChecked():
+                    if not self.sark_dict['sark_busy']:
+                        self.measure_bands()
+                
+                # measure optical
+                if self.ui.optical_syr_seq.isChecked():
+                    if not self.spec_dict['spec_busy']:
+                        self.optical_rh_seq()
+                
             # update fields, normal operations, and saving in main loop
             self.df, self.df_i = ops.main_loop_update(
                     self.ops_dict, self.df, self.df_i)
@@ -548,6 +634,8 @@ class App(QMainWindow):  # create the main window
             rhmeter.close(self.rhmeter_dev)
         if self.ui.rh200_on.isChecked():
             rh200.close(self.rh_dict['rh_task_dict'])
+        if self.ui.syr_on.isChecked():
+            syr.close(self.syr_dict)
         if self.ui.eis_on.isChecked():
             self.eis_dict['eis_dev'].close()
         if self.ui.mks_on.isChecked():
@@ -675,7 +763,7 @@ class App(QMainWindow):  # create the main window
 
     def eis_rh_seq(self):
         # measure impedance spectrum repeatedly during RH sequence
-        if self.ui.eis_rh_seq.isChecked():
+        if self.ui.eis_rh_seq.isChecked() or self.ui.eis_syr_seq.isChecked():
             if not self.eis_dict['eis_busy']:
                 Thread(target=eis.eis_rh_seq, args=(self.eis_dict,
                                                     self.df,
@@ -786,6 +874,13 @@ class App(QMainWindow):  # create the main window
             if not self.keith_dict['keith_busy']:
                 Thread(target=keith.keith_rh_seq,
                        args=(self.keith_dict, self.df, self.df_i,)).start()
+                
+    def keith_syr_seq(self):
+        # run keithley functions during syringe sequence
+        if self.ui.keithley_on.isChecked():
+            if not self.keith_dict['keith_busy']:
+                Thread(target=keith.keith_syr_seq,
+                       args=(self.keith_dict, self.df, self.df_i,)).start()
 
     def keith_vac_seq(self):
         # run keithley functions during vacuum sequence
@@ -840,6 +935,16 @@ class App(QMainWindow):  # create the main window
     def rh200_checked(self):
         # Triggers when RH-200 humidity generator checkbox status changes.
         rh200.checked(self.rh_dict)
+        
+    def rhmeter_checked(self):
+        # conects Rh/Temp data logger
+        if self.ui.rhmeter_on.isChecked():
+            address = self.ui.rhmeter_address.text()
+            self.rhmeter_dev = rhmeter.initialize(address)
+            self.ui.output_box.append('RH / Temp meter connected')
+        if not self.ui.rhmeter_on.isChecked() and self.rhmeter_dev != None:
+            rhmeter.close(self.rhmeter_dev)
+        
 
     def import_rh_seq(self):
         # Import a saved RH sequence from file
@@ -878,6 +983,70 @@ class App(QMainWindow):  # create the main window
         # add a RH step to the end of the RH sequence
         rh200.add_rh_step(self.rh_dict)
 
+# %% ---------- functions for syringe control and sequence ------------------
+
+    def set_flow(self):
+        # set flow using syringe pumpr
+        if self.ui.syr_on.isChecked():
+            Thread(target=syr.set_flow, args=(self.syr_dict,
+                                              self.df,
+                                              self.df_i,)).start()
+
+    def syr_checked(self):
+        # Triggers when syringe pump checkbox status changes.
+        syr.checked(self.syr_dict)
+    
+    def calc_flow(self):
+        # calculate flow according to the desired concentration
+        syr.calc(self.syr_dict)
+        syr.tx_flow(self.syr_dict)
+        syr.update_ui(self.syr_dict)
+        
+    def syr_fix_car_flow(self):
+        if self.ui.syr_fix_car_flow.isChecked(): 
+            self.ui.tot_flow_label.setText('Dry gas flow (sccm)')
+        if not self.ui.syr_fix_car_flow.isChecked(): 
+            self.ui.tot_flow_label.setText('Total flow (sccm)')
+    
+    def syr_infuse(self):
+        if self.syr_dict['infuse_on'].isChecked():
+            syr.infuse(self.syr_dict)
+        if not self.syr_dict['infuse_on'].isChecked():
+            syr.stop_infusing(self.syr_dict)
+
+    def import_syr_seq(self):
+        # Import a saved syringe sequence from file
+        seq_name = QFileDialog.getOpenFileName(
+                self, 'Select syringe sequence file', '.csv')[0]
+        syr.import_syr_seq(self.syr_dict, seq_name)
+
+    def export_syr_seq(self):
+        # Export an syringe sequence from the sequence table to a file
+        seq_name = QFileDialog.getSaveFileName(
+                self, 'Export syr sequence file', '.csv')[0]
+        syr.export_syr_seq(self.syr_dict, seq_name)
+
+    def clear_syr_seq(self):
+        # Clear the syringe sequence from the GUI table
+        syr.clear_syr_seq(self.syr_dict)
+
+    def plot_syr_seq(self):
+        # Show plot of the syringe over time
+        syr.plot_syr_seq(self.syr_dict)
+
+    def plot_syr(self):
+        syr.plot_syr(self.df, self.df_i)
+
+    def stop_syr_seq(self):
+        # Stop syringe sequence
+        self.syr_dict['syr_seq_running'] = False
+
+    def run_syr_seq(self):
+        # Run the syringe sequence
+        Thread(target=syr.run_syr_seq, args=(self.syr_dict, self.vac_dict,)).start()
+        if self.ui.export_settings_at_seq.isChecked():
+            self.export_settings()
+        
 # %% --- functions for Ocean Optics USB4000 optical spectrometer -----------
     def spec_checked(self):
         # spectrometer check box is checked / unchecked
