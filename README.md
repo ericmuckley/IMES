@@ -17,6 +17,12 @@ This will create a new conda environment using the _imes_env_july2019.yml_ file,
 
 Now you can enter/activate the envirnment by typing ```conda activate envname```. Your terminal prompt should change to show that you're inside the new environment. Now you can type ```spyder``` and _Spyder_ should open inside your new environment. With _Spyder_ open, you can open the _IMES.py_ file and run it.
 
+
+### Installing Anaconda dependencies from conda-pack
+
+This can be used to install an Anaconda environment on a machine with no network connectivity. Please fiollow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file in this folder to unpack the environment.
+
+
 ### Running the software
 
 To run the IMES software, open a Python editor like *Spyder*, which comes pre-packaged with *Anaconda*. In the editor, open *IMES.py* in the *imes_python* folder. Run *IMES.py* in the editor. If there are errors because of missing libraries, you must first install those libraries. To install them, open the *Anaconda prompt*, which comes pre-packaged with *Anaconda*. In the Anaconda prompt, type `conda install library_name`, where *library_name* is the name of the missing library. You can do an internet search for "conda install X", where *X* is the missing library name to figure out the best way to install the package through *Anaconda*.
