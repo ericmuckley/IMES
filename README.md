@@ -20,7 +20,7 @@ Now you can enter/activate the envirnment by typing ```conda activate envname```
 
 ### Installing Anaconda dependencies from conda-pack
 
-This can be used to install an Anaconda environment on a machine with no network connectivity. Please fiollow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file in this folder to unpack the environment.
+This can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file in this folder to unpack the environment.
 
 
 ### Running the software
