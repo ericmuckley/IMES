@@ -41,7 +41,7 @@ ornl_cnms_logo
 class App(QMainWindow):  # create the main window
 
     # path of the .ui Qt designer file to set up GUI
-    ui_layout = 'C:\\Users\\a6q\\imes_python\\IMES_layout.ui'
+    ui_layout = 'C:\\Users\\a6q\\imes_python\\IMES_layout.ui'  # _syr2.ui'
 
     # load Qt designer XML .ui GUI file
     Ui_MainWindow, QtBaseClass = uic.loadUiType(ui_layout)

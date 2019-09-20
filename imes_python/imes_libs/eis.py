@@ -104,8 +104,19 @@ def measure_eis(eis_dict, df, df_i):
     solartron = eis_dict['eis_dev']
     eis_dict['output_box'].append('Measuring impedance spectrum...')
 
-    # get frequencies at which to measure
-    freq_array = get_eis_freqs(eis_dict)
+    # reset device and configure default settings
+    solartron.write('*RST')
+    time.sleep(1)
+    solartron.write('*SRE16')
+    time.sleep(1)
+    solartron.write('OS 0')
+    time.sleep(1)
+    solartron.write('RH 1')
+    # configure data output
+    solartron.write('OP 1,0')
+    solartron.write('OP 2,1')
+    solartron.write('OP 3,0')
+    solartron.write('RH 0')
 
     # set AC voltage amplitude
     ac_bias = float(eis_dict['ac_bias'].value())
@@ -115,28 +126,21 @@ def measure_eis(eis_dict, df, df_i):
     dc_offset = float(eis_dict['dc_offset'].value())
     solartron.write('VB '+str(dc_offset))
 
+    # get frequencies at which to measure
+    freq_array = get_eis_freqs(eis_dict)
     results = np.zeros((len(freq_array), 5))
     # loop over each frequency in frequency range
     for i, f0 in enumerate(freq_array):
-
-        # take slower measurements at low frequencies
-        pause = 0.2
-        if f0 < 100:
-            pause = 2 * (1 / f0)
         # set frequency
         solartron.write('FR '+str(f0))
-        time.sleep(pause)
-
-        z = []
-        phase_deg = []
-        f0_exp = []
+        z, phase_deg, f0_exp = [], [], []
         for sweep in range(eis_dict['averaging'].value()):
             # measure impedance
             result0 = solartron.query('SI').split(',')
             f0_exp.append(float(result0[0]))
             z.append(float(result0[1]))
             phase_deg.append(float(result0[2]))
-            time.sleep(pause/2)
+            time.sleep(1)
         f0_exp = np.mean(f0_exp)
         z = np.mean(z)
         phase_deg = np.mean(phase_deg)
@@ -146,14 +150,11 @@ def measure_eis(eis_dict, df, df_i):
         imz = z * np.sin(phase_rad)
 
         results[i, :] = [f0_exp, z, phase_deg, rez, imz]
-        print(results[:i, :2])
         eis_dict['new_data'] = results[:i, :2]
-
         # display results on GUI
         eis_dict['actual_freq'].setText(str(np.round(f0, decimals=2)))
         eis_dict['actual_z'].setText(str(np.round(z, decimals=2)))
         eis_dict['actual_phase'].setText(str(np.around(phase_deg, decimals=2)))
-
         tot_eis_time = (time.time() - begin_eis_time)/60
         eis_dict['eis_time'].setText(str(np.round(tot_eis_time, decimals=2)))
     # solartron.close()
@@ -312,91 +313,46 @@ def plot_low_freq_z(eis_dict, df, df_i):
 # use this script to test/debug impedance analyzer
 if __name__ == '__main__':
 
-    # open connectino to instrument
+    # set VAC (V), VDC (V), and frequency (Hz)
+    vac, vdc, freq = 0.5, 0.0, 1
+
+    # open connection to instrument
     rm = visa.ResourceManager()
-    # print(rm.list_resources())
-    solartron = rm.open_resource('GPIB1::4::INSTR')
-    time.sleep(0.2)
-    solartron.write('*RST')
-    time.sleep(0.2)
+    print(rm.list_resources())
 
-    # set AC voltage amplitude
-    solartron.write('VA 1')
-    time.sleep(0.2)
-    # set DC bias offset (-40 V to +40 V)
-    solartron.write('VB 0')
-    time.sleep(0.2)
+    dev = rm.open_resource('GPIB1::4::INSTR')
 
-    # set frequency
-    start_f = 10
-    end_f = 1000000
-    start_f_exp = int(np.log10(start_f))
-    end_f_exp = int(np.log10(end_f))
-    # construct frequency array
-    freqs = np.logspace(start_f_exp, end_f_exp, 5)
-    results = np.zeros((len(freqs), 3))
-    for f_i, f in enumerate(freqs):
-        time.sleep(0.2)
-        solartron.write('FR '+str(f))
-        time.sleep(0.2)
-        # print(solartron.query('SI'))
-        solartron.write('SI')
-        time.sleep(0.2)
+    # reset device and use default configuration
+    print(dev.query('*IDN?'))
+    dev.write('*RST')
+    time.sleep(1)
+    dev.write('*SRE16')
+    time.sleep(1)
+    dev.write('OS 0')
+    time.sleep(1)
+    dev.write('RH 1')
+    # configure data output
+    dev.write('OP 1,0')
+    dev.write('OP 2,1')
+    dev.write('OP 3,0')
+    dev.write('RH 0')
 
-        read_string = solartron.read().split(',')
-        results[f_i] = [float(r0) for r0 in read_string[:3]]
+    print('F (Hz), Z (Ohm), Phase (deg)')
+    for freq in [1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6]:
 
-        print(read_string)
+        # configure generator output
+        dev.write('GT0')
+        dev.write('FR '+str(freq))
+        dev.write('VA '+str(vac))
+        dev.write('VB '+str(vdc))
+        # turn off sweep
+        dev.write('SW 0')
+        # acquire single measurement
+        dev.write('SI')
+        time.sleep(1)
+        output = dev.read()
+        output = output.split(',')
+        output = [float(out) for out in output[:3]]
+        print(output)
 
-    solartron.close()
-    print(results)
-    plt.plot(results[:, 0], results[:, 1])
-    plt.show()
-
-'''
-    # for manual sweeping of frequencies
-    frequencies = np.logspace(0, 6, base=10, num=10)
-    averaging = 1
-
-    # empty dataframe for data
-    z_list = []
-    phase_list = []
-
-    for f in frequencies:
-
-        # take slower measurements at low frequencies
-        pause = 0.6 if f < 10 else 0.3
-
-        # set frequency
-        solartron.write('FR '+str(f))
-        time.sleep(0.2)
-        print(solartron.read_stb())
-        time.sleep(pause)
-        print('frequency = '+str(f))
-        z = []
-        phase_deg = []
-        for sweep in range(averaging):
-            time.sleep(0.2)
-            # measure impedance
-            result0 = solartron.query('SI')
-            print(result0)
-            result0 = result0.split(',')
-            z.append(float(result0[1]))
-            phase_deg.append(float(result0[2]))
-            time.sleep(pause)
-        z = np.median(z)
-        phase_deg = np.median(phase_deg)
-
-        z_list.append(z)
-        phase_list.append(phase_deg)
-
-    plt.semilogx(frequencies, z_list)
-    plt.title('Z')
-    plt.show()
-
-    plt.semilogx(frequencies, phase_list)
-    plt.title('Phase')
-    plt.show()
-    solartron.close()    
-'''
-
+    dev.close()
