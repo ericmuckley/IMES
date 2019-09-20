@@ -259,9 +259,9 @@ def plot_z(eis_dict):
     # loop over each measurement
     for i in range(0, len(data.columns)-1, 5):
         colors = cm.jet(np.linspace(0, 1, len(data.columns)-4))
-        plt.loglog(data.iloc[:, i].astype(float),
-                   data.iloc[:, i+1].astype(float),
-                   c=colors[int(i/5)], label=str(int(i/5)))
+        plt.semilogx(data.iloc[:, i].astype(float),
+                     data.iloc[:, i+1].astype(float),
+                     c=colors[int(i/5)], label=str(int(i/5)))
     plt.xlabel('Frequency (Hz)', fontsize=fontsize)
     plt.ylabel('Z (Ohm)', fontsize=fontsize)
     plt.legend()
