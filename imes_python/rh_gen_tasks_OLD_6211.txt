@@ -1,0 +1,40 @@
+﻿[DAQmx]	MajorVersion	MinorVersion	
+	14	2	
+
+[DAQmxChannel]	AI.Max	AI.MeasType	AI.Min	AI.TermCfg	AI.Voltage.Units	ChanType	PhysicalChanName	
+AI DP/Voltage	10	Voltage	-10	Differential	Volts	Analog Input	Dev2/ai0	
+AI RH/Voltage	10	Voltage	-10	Differential	Volts	Analog Input	Dev2/ai1	
+AI TEMP/Voltage	10	Voltage	-10	Differential	Volts	Analog Input	Dev2/ai2	
+
+[DAQmxChannel]	AO.Max	AO.Min	AO.OutputType	AO.TermCfg	AO.Voltage.Units	ChanType	PhysicalChanName	
+AO DRY/VoltageOut	10	-10	Voltage	RSE	Volts	Analog Output	Dev2/ao1	
+AO WET/VoltageOut	10	-10	Voltage	RSE	Volts	Analog Output	Dev2/ao0	
+voltage_out_to_peltier/VoltageOut	5	0	Voltage	RSE	Volts	Analog Output	Dev1/ao1	
+
+[DAQmxChannel]	ChanType	DI.InvertLines	PhysicalChanName	
+DI TGA/DigitalIn	Digital Input	0	Dev2/port0/line0	
+
+[DAQmxChannel]	ChanType	DO.InvertLines	PhysicalChanName	
+DO DRY/DigitalOut	Digital Output	0	Dev2/port1/line1	
+DO GAS/DigitalOut	Digital Output	0	Dev2/port1/line3	
+DO VENT/DigitalOut	Digital Output	0	Dev2/port1/line2	
+DO WET/DigitalOut	Digital Output	0	Dev2/port1/line0	
+
+[DAQmxTask]	Channels	SampClk.ActiveEdge	SampClk.Rate	SampClk.Src	SampQuant.SampMode	SampQuant.SampPerChan	SampTimingType	
+AI DP	AI DP/Voltage	Rising	1000		Finite Samples	100	Sample Clock	
+AI RH	AI RH/Voltage	Rising	1000		Finite Samples	100	Sample Clock	
+AI TEMP	AI TEMP/Voltage	Rising	1000		Finite Samples	100	Sample Clock	
+AO DRY	AO DRY/VoltageOut						On Demand	
+AO WET	AO WET/VoltageOut						On Demand	
+DI TGA	DI TGA/DigitalIn						On Demand	
+DO DRY	DO DRY/DigitalOut						On Demand	
+DO GAS	DO GAS/DigitalOut						On Demand	
+DO VENT	DO VENT/DigitalOut						On Demand	
+DO WET	DO WET/DigitalOut						On Demand	
+voltage_out_to_peltier	voltage_out_to_peltier/VoltageOut						On Demand	
+
+[DAQmxDevice]	BusType	DevIsSimulated	DevSerialNum	ProductNum	ProductType	
+Dev1	USB	1	0x0	0x76BF	USB-6001	
+Dev2	USB	1	0x0	0x7270	USB-6211	
+Dev3	USB		0x13EC7BB	0x7270	USB-6211	
+
