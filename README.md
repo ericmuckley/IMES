@@ -20,7 +20,7 @@ Now you can enter/activate the envirnment by typing ```conda activate envname```
 
 ### Installing Anaconda dependencies from conda-pack
 
-This can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file to unpack the environment.
+_Conda-pack_ can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file to unpack the environment. Note that the envirnment will only be compatible with 64-bit Windows machines running Python 3.
 
 
 ### Running the software
@@ -66,4 +66,8 @@ Data is transferred between the main *IMES.py* script and the other modules usin
 
 To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda*, and open the *IMES_layout.ui* file. This is the editable layout file for designing the GUI. Front panel objects can be added, deleted and modified. New objects should be named according to their function, as referencing them in the code will require their name. For example, a new text box named *text_box5* will be referenced in the main GUI class in *IMES.py* as `self.ui.text_box5`.
 <br><br>
-*IMES.py* and other modules inside the *IMES_libs* folder are all editable. When changes are made to the GUI layout file, they should usually be accompanied by corresponding changes in the Python scripts. 
+*IMES.py* and other modules inside the *IMES_libs* folder are all editable. When changes are made to the GUI layout file, they should usually be accompanied by corresponding changes in the Python scripts.
+
+### Conencting to theRH-200 Relative Humidity Generator
+
+Control for the humidity generator is accomplished by configuring the generator in National Instruments Measurement and Automation Explorer (NI MAX). Open NI MAX and import the _rh_gen_tasks_new_6001.txt_ or _rh_gen_tasks_old_6211.txt_ files, based on the model of the RH generator (new models use the NI 6001 board while old models use the NI 6211 board). Once imported, delete all the empty 6001 and 6211 devices and migrate their tasks to the new imported device. Now it should be possible to communicate to the RH generator using LabVIEW or Python with the nidaqmx library.
