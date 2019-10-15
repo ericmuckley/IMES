@@ -294,6 +294,7 @@ class App(QMainWindow):  # create the main window
 
         # dictionary to hold Ocean Optics USB4000 spectrometer related items
         self.spec_dict = {
+                'new_data': None,
                 'spec_dev': None,
                 'spec_busy': False,
                 'spec_smoothing': None,
@@ -411,6 +412,10 @@ class App(QMainWindow):  # create the main window
         self.keith_graph_cv = realtimeplot.MakeGraph(
                 title='Keithley', xlabel='Voltage (V)', ylabel='Current (A)')
 
+        self.spec_graph = realtimeplot.MakeGraph(
+                title='Optical spectrum', xlabel='Wavelength (nm)',
+                ylabel='Intensity (counts)')
+
 # %% ----------- system control functions ------------------------------
 
     def main_loop(self):
@@ -463,6 +468,14 @@ class App(QMainWindow):  # create the main window
                         self.qcm_graph.xmax = len(self.sark_dict['new_data'])
                         self.qcm_graph.add_data(self.sark_dict['new_data'])
                         self.qcm_graph.show()
+
+            # show optical spectrometer plot
+            if self.spec_dict['spec_on'].isChecked():
+                # if self.spec_dict['spec_busy']:
+                if self.spec_dict['new_data'] is not None:
+                    self.spec_graph.xmax = len(self.spec_dict['new_data'])
+                    self.spec_graph.add_data(self.spec_dict['new_data'])
+                    self.spec_graph.show()
 
             # ################################################################
             # ------ control functionality when vacuum sequence is running ---
@@ -672,19 +685,21 @@ class App(QMainWindow):  # create the main window
 
     def eis_rh_seq(self):
         # measure impedance spectrum repeatedly during RH sequence
-        if self.ui.eis_rh_seq.isChecked():
-            if not self.eis_dict['eis_busy']:
-                Thread(target=eis.eis_rh_seq, args=(self.eis_dict,
-                                                    self.df,
-                                                    self.df_i)).start()
+        if self.ui.eis_on.isChecked():
+            if self.eis_dict['eis_rh_seq'].isChecked():
+                if not self.eis_dict['eis_busy']:
+                    Thread(target=eis.eis_rh_seq, args=(self.eis_dict,
+                                                        self.df,
+                                                        self.df_i)).start()
 
     def eis_vac_seq(self):
         # measure impedance spectrum repeatedly during vacuum sequence
-        if self.ui.eis_vac_seq.isChecked():
-            if not self.eis_dict['eis_busy']:
-                Thread(target=eis.eis_rh_seq, args=(self.eis_dict,
-                                                    self.df,
-                                                    self.df_i)).start()
+        if self.ui.eis_on.isChecked():
+            if self.eis_dict['eis_vac_seq'].isChecked():
+                if not self.eis_dict['eis_busy']:
+                    Thread(target=eis.eis_rh_seq, args=(self.eis_dict,
+                                                        self.df,
+                                                        self.df_i)).start()
 
     def plot_low_freq_z(self):
         # plot lowest-frequency impedance over time
@@ -883,6 +898,8 @@ class App(QMainWindow):  # create the main window
     def get_optical_spectrum(self):
         # acquire optical spectrum
         Thread(target=spec.get_spec, args=(self.spec_dict,)).start()
+        self.spec_graph.add_data(self.spec_dict['new_data'])
+        self.spec_graph.show()
 
     def optical_rh_seq(self):
         # acquire multiple optical spectra during sequence

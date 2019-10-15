@@ -14,7 +14,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import cm
 # from scipy.signal import savgol_filter
-
+import seabreeze.spectrometers as sb
+'''
 # manually fix pyUSB installation for import of Ocean Optics Spectometer
 # DO NOT CHANGE THE ORDER OF THE FOLLOWING LINES OR DEVICE WILL NOT BE FOUND
 import usb.backend.libusb1
@@ -22,15 +23,19 @@ import usb.backend.libusb1
 backend = usb.backend.libusb1.get_backend(
         find_library=lambda x: 'libusb-1.0.dll')
 dev = usb.core.find(backend=backend)
+
 import seabreeze
 seabreeze.use('pyseabreeze')
 import seabreeze.spectrometers as sb
+'''
+
 fontsize = 12
 
 
 def initialize_spectrometer(spec_dict):
     # connect to Ocean Optics USB4000 spectrometer
-    sm = sb.Spectrometer(sb.list_devices()[0])
+    # sm = sb.Spectrometer(sb.list_devices()[0])
+    sm = sb.Spectrometer.from_serial_number()
     # print(sm.pixels)
     return sm
 
@@ -42,7 +47,7 @@ def spec_checked(spec_dict):
 
         # try to connect to spectrometer
         try:
-            sm = sb.Spectrometer(sb.list_devices()[0])
+            sm = sb.Spectrometer.from_serial_number()
             spec_dict['output_box'].append('Spectrometer connected.')
             spec_dict['optical_box'].setEnabled(True)
             sm.close()
@@ -63,7 +68,7 @@ def get_spec(spec_dict):
 
     spec_dict['measure_button'].setEnabled(False)
     # connect to Ocean Optics USB4000 spectrometer
-    sm = sb.Spectrometer(sb.list_devices()[0])
+    sm = sb.Spectrometer.from_serial_number()
 
     spec_dict['output_box'].append('Measuring optical spectrum...')
     # set measurement integration time in microseconds
@@ -93,7 +98,7 @@ def get_spec(spec_dict):
     else:
         pass
     '''
-
+    spec_dict['new_data'] = np.column_stack((wl0, int0))
     # append new data to optical dataframe. first create empty cells to fill.
     spec_dict['optical_df']['wavelength_'+spec_time] = np.repeat('', 9999)
     spec_dict['optical_df']['intensity_'+spec_time] = np.repeat('', 9999)
@@ -139,7 +144,7 @@ def plot_optical_spectra(spec_dict):
 
 
 def optical_rh_seq(spec_dict):
-    # measure optical spectra prepeatedly during RH sequence
+    # measure optical spectra repeatedly during RH sequence
     spec_dict['spec_busy'] = True
     get_spec(spec_dict)
     wait_time = float(spec_dict['set_spec_pause'].value())*60
@@ -148,7 +153,7 @@ def optical_rh_seq(spec_dict):
 
 
 def optical_vac_seq(spec_dict):
-    # measure optical spectra prepeatedly during vacuum sequence
+    # measure optical spectra repeatedly during vacuum sequence
     spec_dict['spec_busy'] = True
     get_spec(spec_dict)
     wait_time = float(spec_dict['set_spec_pause'].value())*60
@@ -160,7 +165,7 @@ def optical_vac_seq(spec_dict):
 if __name__ == '__main__':
 
     # open connectino to device
-    sm = sb.Spectrometer(sb.list_devices()[0])
+    sm = sb.Spectrometer.from_serial_number()
 
     # set measurement integration time in microseconds
     sm.integration_time_micros(1000)
@@ -171,5 +176,5 @@ if __name__ == '__main__':
                                  correct_nonlinearity=False)[10:-185]
     sm.close()
 
-    # plt.scatter(wavelengths, intensities, s=2, c='k', alpha=0.2)
-    # plt.show()
+    plt.scatter(wavelengths, intensities, s=2, c='k', alpha=0.2)
+    plt.show()

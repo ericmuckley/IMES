@@ -135,12 +135,24 @@ def measure_eis(eis_dict, df, df_i):
         solartron.write('FR '+str(f0))
         z, phase_deg, f0_exp = [], [], []
         for sweep in range(eis_dict['averaging'].value()):
+
+            time.sleep(1)
+            if f0 <= 100:
+                time.sleep(1)
+            if f0 <= 10:
+                time.sleep(2)
+            if f0 <= 5:
+                time.sleep(4)
+            if f0 <= 1:
+                time.sleep(10)
+
             # measure impedance
             result0 = solartron.query('SI').split(',')
             f0_exp.append(float(result0[0]))
             z.append(float(result0[1]))
             phase_deg.append(float(result0[2]))
-            time.sleep(1)
+            # set delay between points based on the frequency
+
         f0_exp = np.mean(f0_exp)
         z = np.mean(z)
         phase_deg = np.mean(phase_deg)
@@ -202,27 +214,21 @@ def measure_eis(eis_dict, df, df_i):
     # save max current to main df
     low_freq_z = results[0, 1]
     df['low_freq_z'].iloc[df_i] = str(low_freq_z)
+
+    time.sleep(10)
+    time.sleep(float(eis_dict['pause_after_eis'].value())*60)
+
     eis_dict['eis_busy'] = False
 
 
 def eis_rh_seq(eis_dict, df, df_i):
     # run impedance measurement continuously during RH sequence
-    eis_dict['eis_busy'] = True
-    if eis_dict['eis_rh_seq'].isChecked():
-        measure_eis(eis_dict, df, df_i)
-        time.sleep(2)
-    time.sleep(float(eis_dict['pause_after_eis'].value())*60)
-    eis_dict['eis_busy'] = False
+    measure_eis(eis_dict, df, df_i)
 
 
 def eis_vac_seq(eis_dict, df, df_i):
     # run impedance measurement continuously during RH sequence
-    eis_dict['eis_busy'] = True
-    if eis_dict['eis_vac_seq'].isChecked():
-        measure_eis(eis_dict, df, df_i)
-        time.sleep(2)
-    time.sleep(float(eis_dict['pause_after_eis'].value())*60)
-    eis_dict['eis_busy'] = False
+    measure_eis(eis_dict, df, df_i)
 
 
 def plot_phase(eis_dict):

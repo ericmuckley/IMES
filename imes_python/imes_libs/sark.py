@@ -769,8 +769,9 @@ def plot_qcm_spectra(sark_dict):
                 spec0 = spec0[spec0 != '']
                 spec0 = spec0.values.astype(float)
                 # plot Rs vs frequency
-                ax[n_i].plot(spec0[:, 0]/1e6, spec0[:, 1],
-                  lw=1, label=str(int(i/3)), c=colors[int(i/3)])
+                ax[n_i].plot(
+                        spec0[:, 0]/1e6, spec0[:, 1],
+                        lw=1, label=str(int(i/3)), c=colors[int(i/3)])
 
     fig.canvas.set_window_title('QCM spectra')
     plt.draw()
@@ -779,8 +780,8 @@ def plot_qcm_spectra(sark_dict):
 # test sark device
 if __name__ == '__main__':
     dev = sark_open()
-    
-    #rs, xs = get_fast_spec(dev, 5000000, 10)
+
+    rs, xs = get_fast_spec(dev, 5000000, 10)
     sark_close(dev)
 
 '''
