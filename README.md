@@ -43,7 +43,9 @@ The main *IMES.py* file calls a number of files:
 * **ornl_cnms_logo.py**: Python file created from Qt resource file
 <br>
 <br>
+
 *IMES.py* also imports python modules from the *IMES_libs* folder. These modules contain code for controlling instruments and measurement conditions inside the environmental chamber:
+
 * **cades.py**: module for communicating with CADES server at ORNL
 * **eis.py**: module for controlling Solartron 1260 impedance spectrometer
 * **jkem.py**: module for controlling J-KEM temperature controller
