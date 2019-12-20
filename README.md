@@ -1,4 +1,4 @@
-# IMES Software
+# Integrated multifunctional environmental system (IMES)
 
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
@@ -59,9 +59,7 @@ The main *IMES.py* file calls a number of files:
 * **spec.py**: module for controlling Ocean Optics optical spectrometer
 * **vac.py**: module for controlling the vacuum pressure, valve, turbo pump, and mass flow controllers
 <br>
-<br>
 Data is transferred between the main *IMES.py* script and the other modules using dictionaries which hold references to devices, front panel GUI objects, and measured parameters. There is a different dictionary associated with each module. For example, *vac_dict* holds information about the vacuum system and is used to communicate with the *vac.py* module, while *keith_dict* is used to transfer data to and from the *keith.py* module for controlling the Keithley multimeter. 
-
 
 ### Editing the software
 
