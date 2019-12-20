@@ -29,15 +29,15 @@ To run the IMES software, open a Python editor like *Spyder*, which comes pre-pa
 <br><br>
 When all libraries are installed correctly and *IMES.py* runs successfully, a file browser dialog will pop up ask ask you to designate a folder in which to save the experimental data files. You may select an existing folder or create a new one and select it. After selecting a folder for data files, the GUI window will appear. 
 <br><br>
-To connect instuments, check the checkboxes on the left-hand side of the window. Before connecting an instument, change its address so it matches the actual physical address of the instument in the PC. It is easy to see which device addresses are connected using Windows *Device Manager* or National Instruments *Measurement and Automation Explorer*.
+To connect instuments, check the checkboxes on the left-hand side of the window. Before connecting an instument, change its address so it matches the actual physical address of the instument in the PC. It is easy to see which device addresses are connected using Windows *Device Manager* or National Instruments *Measurement and Automation Explorer* (*NI-MAX*).
 <br><br>
-While the IMES software is running, the output box in the lower left-hand corner of the window displays messages to the user. Instument and measurement setttings can be adjusted on the front panel of the GUI, and measurements and sequences of measurements can be initiated using the top toolbar.
+While the IMES software is running, the output box in the lower left-hand corner of the window displays messages to the user. Instrument and measurement settings can be adjusted on the front panel of the GUI, and measurements and sequences of measurements can be initiated using the top toolbar.
 
-### Layout of the software
+### Description of files
 
 The main *IMES.py* file calls a number of files:\
-**IMES_layout.ui**: the GUI layout file, which dictates where GUI objects are placed and their names\
-**libusb-1.0.dll**: a Windows USB library which may be required for communication with USB devices\
+* **IMES_layout.ui**: the GUI layout file, which dictates where GUI objects are placed and their names\
+* **libusb-1.0.dll**: a Windows USB library which may be required for communication with USB devices\
 **ornl_cnms_logo.png**: raw image file of CNMS logo which is embedded on GUI\
 **ornl_cnms_logo.qrc**: Qt resource file created from raw png image\
 **ornl_cnms_logo.py**: Python file freated from Qt resource file\
