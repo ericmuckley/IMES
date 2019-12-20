@@ -4,28 +4,28 @@ This repository contains software for controlling the Integrated Multifunctional
 
 ### Installing the software
 
-The software requires no formal installation, but installation of missing Python libraries will likely be required when running the software for the first time. To download the missing libraries, it is recommended to use the scientific Python distribution _Anaconda_ (https://www.anaconda.com/). If _Anaconda_ is not present on the local PC, download it from its website and download the _imes_python_ folder in this repository to the local PC and unzip it.
+The software requires no formal installation, but installation of missing Python libraries will likely be required when running the software for the first time. To download the missing libraries, it is recommended to use the scientific Python distribution _Anaconda_ (https://www.anaconda.com/). If _Anaconda_ is not present on the local PC, download it from its website. Then download the _imes_python_ folder in this repository to the local PC and unzip it.
 <br><br>
 To avoid installing individual libraries, the complete Python installation which includes all necessary packages is located in this folder as a _.yml_ file. Alternatively, the same _.yml_ file can be downloaded from Anaconda Cloud (https://anaconda.org/ericmuckley/imes_env_july2019)
 
 ### Installing Anaconda dependencies from the _.yml_ file
 
-First, download the IMES folder from this page. Then unzip the folder and put it on your local PC. Open the Anaconda terminal window. Navigate to your IMES folder by typing ```cd C:\Users\a6q\Desktop\IMES``` in ther terminal window, but use the path to your own IMES folder. The terminal prompt should show you that you're now inside the IMES folder. Now you must install dependencies for running the software from the _.yml_ file.
+First, download the IMES folder from this page. Then unzip the folder and put it on your local PC. Open the _Anaconda prompt_ terminal window. Navigate to your IMES folder by typing ```cd C:\Users\a6q\Desktop\IMES``` in the terminal window, but use the actual path to your own IMES folder. The terminal prompt should show you that you're now inside the IMES folder. Now you must install the IMES dependencies from the _.yml_ file.
 
 In the Anaconda terminal (which has been already been navigated to the IMES folder), type ```conda env create --name envname --file=imes_env_july2019.yml```
-This will create a new conda environment using the _imes_env_july2019.yml_ file, and name the new environment _envname_.
+This will create a new conda dependency environment using the _imes_env_july2019.yml_ file, and name the new environment _envname_.
 
 Now you can enter/activate the envirnment by typing ```conda activate envname```. Your terminal prompt should change to show that you're inside the new environment. Now you can type ```spyder``` and _Spyder_ should open inside your new environment. With _Spyder_ open, you can open the _IMES.py_ file and run it.
 
 
 ### Installing Anaconda dependencies from conda-pack
 
-_Conda-pack_ can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file to unpack the environment. Note that the envirnment will only be compatible with 64-bit Windows machines running Python 3.
+_Conda-pack_ can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file to unpack the environment. Note that the environment will only be compatible with 64-bit Windows machines running Python 3.
 
 
 ### Running the software
 
-To run the IMES software, open a Python editor like *Spyder*, which comes pre-packaged with *Anaconda*. In the editor, open *IMES.py* in the *imes_python* folder. Run *IMES.py* in the editor. If there are errors because of missing libraries, you must first install those libraries. To install them, open the *Anaconda prompt*, which comes pre-packaged with *Anaconda*. In the Anaconda prompt, type `conda install library_name`, where *library_name* is the name of the missing library. You can do an internet search for "conda install X", where *X* is the missing library name to figure out the best way to install the package through *Anaconda*.
+To run the IMES software, open a Python editor like *Spyder*, which comes pre-packaged with *Anaconda*. In the editor, open *IMES.py* in the *imes_python* folder. Run *IMES.py* in the editor. If there are errors because of missing libraries, you must first install those libraries. To manually install them, open the *Anaconda prompt*, which comes pre-packaged with *Anaconda*. In the Anaconda prompt, type `conda install library_name`, where *library_name* is the name of the missing library. You can do an internet search for "conda install X", where *X* is the missing library name to figure out the best way to install the package through *Anaconda*.
 <br><br>
 When all libraries are installed correctly and *IMES.py* runs successfully, a file browser dialog will pop up ask ask you to designate a folder in which to save the experimental data files. You may select an existing folder or create a new one and select it. After selecting a folder for data files, the GUI window will appear. 
 <br><br>
