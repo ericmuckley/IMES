@@ -42,7 +42,6 @@ The main *IMES.py* file calls a number of files:
 * **ornl_cnms_logo.qrc**: Qt resource file created from raw png image
 * **ornl_cnms_logo.py**: Python file created from Qt resource file
 <br>
-<br>
 
 *IMES.py* also imports python modules from the *IMES_libs* folder. These modules contain code for controlling instruments and measurement conditions inside the environmental chamber:
 
