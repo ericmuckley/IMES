@@ -70,3 +70,8 @@ To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda
 ### Conencting to the RH-200 Relative Humidity Generator
 
 Control for the humidity generator is accomplished by configuring the generator in National Instruments Measurement and Automation Explorer (NI MAX). Open NI MAX and import the _rh_gen_tasks_new_6001.txt_ or _rh_gen_tasks_old_6211.txt_ file, based on the model of the RH generator (new models use the NI 6001 board while old models use the NI 6211 board). Once imported, delete all the empty 6001 and 6211 devices and migrate their tasks to the new imported device. Now it should be possible to communicate with the RH generator using LabVIEW or Python with the nidaqmx library.
+
+### Help
+
+For aditional help, you may contact the author, Eric Muckley (ericmuckley at gmail dot com).
+
