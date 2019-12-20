@@ -2,7 +2,7 @@
 
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
-### Installing the software
+## Installing the software
 
 The software requires no formal installation, but installation of missing Python libraries will likely be required when running the software for the first time. To download the missing libraries, it is recommended to use the scientific Python distribution _Anaconda_ (https://www.anaconda.com/). If _Anaconda_ is not present on the local PC, download it from its website. Then download the _imes_python_ folder in this repository to the local PC and unzip it.
 <br><br>
@@ -23,7 +23,7 @@ Now you can enter/activate the envirnment by typing ```conda activate envname```
 _Conda-pack_ can be used to install an Anaconda environment on a machine with no network connectivity. Please follow the documentation at https://conda.github.io/conda-pack/#commandline-usage and use the _.tar.gz_ file to unpack the environment. Note that the environment will only be compatible with 64-bit Windows machines running Python 3.
 
 
-### Running the software
+## Running the software
 
 To run the IMES software, open a Python editor like *Spyder*, which comes pre-packaged with *Anaconda*. In the editor, open *IMES.py* in the *imes_python* folder. Run *IMES.py* in the editor. If there are errors because of missing libraries, you must first install those libraries. To manually install them, open the *Anaconda prompt*, which comes pre-packaged with *Anaconda*. In the Anaconda prompt, type `conda install library_name`, where *library_name* is the name of the missing library. You can do an internet search for "conda install X", where *X* is the missing library name to figure out the best way to install the package through *Anaconda*.
 <br><br>
@@ -33,7 +33,7 @@ To connect instuments, check the checkboxes on the left-hand side of the window.
 <br><br>
 While the IMES software is running, the output box in the lower left-hand corner of the window displays messages to the user. Instrument and measurement settings can be adjusted on the front panel of the GUI, and measurements and sequences of measurements can be initiated using the top toolbar.
 
-### Description of files
+## Description of files
 
 The main *IMES.py* file calls a number of files:
 * **IMES_layout.ui**: the GUI layout file, which dictates where GUI objects are placed and their names
@@ -61,17 +61,17 @@ The main *IMES.py* file calls a number of files:
 <br>
 Data is transferred between the main *IMES.py* script and the other modules using dictionaries which hold references to devices, front panel GUI objects, and measured parameters. There is a different dictionary associated with each module. For example, *vac_dict* holds information about the vacuum system and is used to communicate with the *vac.py* module, while *keith_dict* is used to transfer data to and from the *keith.py* module for controlling the Keithley multimeter. 
 
-### Editing the software
+## Editing the software
 
 To edit the GUI layout, use *QtDesigner* which comes pre-packaged with *Anaconda*. In the *Anaconda prompt*, type ```designer```. This wull open *QtDesigner*. Then open the *IMES_layout.ui* file. This is the editable layout file for designing the GUI. Front panel objects can be added, deleted and modified. New objects should be named according to their function, as referencing them in the code will require their name. For example, a new text box named *text_box5* will be referenced in the main GUI class in *IMES.py* as `self.ui.text_box5`.
 <br><br>
 *IMES.py* and other modules inside the *IMES_libs* folder are all editable. When changes are made to the GUI layout file, they should usually be accompanied by corresponding changes in the Python scripts.
 
-### Conencting to the RH-200 Relative Humidity Generator
+## Conencting to the RH-200 Relative Humidity Generator
 
 Control for the humidity generator is accomplished by configuring the generator in National Instruments Measurement and Automation Explorer (NI MAX). Open NI MAX and import the _rh_gen_tasks_new_6001.txt_ or _rh_gen_tasks_old_6211.txt_ file, based on the model of the RH generator (new models use the NI 6001 board while old models use the NI 6211 board). Once imported, delete all the empty 6001 and 6211 devices and migrate their tasks to the new imported device. Now it should be possible to communicate with the RH generator using LabVIEW or Python with the nidaqmx library.
 
-### Help
+## Help
 
 For aditional help, you may contact the author, Eric Muckley (ericmuckley at gmail dot com).
 
