@@ -602,7 +602,7 @@ def save_qcm_data(sark_dict, measure_time, n, spec):
         popt, fit = perform_bvd_fit(freq, g, guess)
         # f0 = popt[4] #this gives wrong f0...
         # must find out why by plotting BvD fit along with data
-        D = popt[3]
+        D = np.abs(popt[3])
         sark_dict['output_box'].append(
                 'Dissipation at n='+str(n)+' found: '+str(D))
     except:  # if fit fails

@@ -2,6 +2,8 @@
 """
 Created on Wed Jan 9 14:38:47 2019
 @author: ericmuckley@gmail.com
+
+See details at https://github.com/ericmuckley/IMES
 """
 
 # custom modules

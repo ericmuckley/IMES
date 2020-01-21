@@ -136,15 +136,17 @@ def measure_eis(eis_dict, df, df_i):
         z, phase_deg, f0_exp = [], [], []
         for sweep in range(eis_dict['averaging'].value()):
 
-            time.sleep(1)
+            time.sleep(0.1)
+            '''
             if f0 <= 100:
-                time.sleep(1)
+                time.sleep(3)
             if f0 <= 10:
                 time.sleep(2)
             if f0 <= 5:
-                time.sleep(4)
-            if f0 <= 1:
                 time.sleep(10)
+            if f0 <= 1:
+                time.sleep(20)
+            '''
 
             # measure impedance
             result0 = solartron.query('SI').split(',')
