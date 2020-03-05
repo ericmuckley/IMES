@@ -3,13 +3,11 @@
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
 
-![IMES in the lab](/img/imes.jpg)
-![IMES in the lab2](imes.jpg)
+![IMES in the lab](./imes_python/img/imes.jpg)
 
+![IMES software screenshot](./imes_python/img/imes_software.jpg)
 
-![IMES software screenshot](./img/imes_software.jpg)
-
-![IMES shematic](./img/imes_schematic.jpg)
+![IMES shematic](./imes_python/img/imes_schematic.jpg)
 
 
 ## Installing the software
