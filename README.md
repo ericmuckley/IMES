@@ -3,10 +3,15 @@
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
 
+A picture of the actual measurement chamber is shown below.
 ![IMES in the lab](./img/imes.jpg)
 
+
+The software which controls the system is loceted in this repositort. A screenshot of the software is shown below.
 ![IMES software screenshot](./img/imes_software.jpg)
 
+
+The system controls instruments through serial (RS-232, USB) communication and consists of a central vacuum chamber (and auxillary gas/liquid flow cells) with optical and electrical feedthroughs, gas flow control and pressure control hardware, and instruments for enabling acquisition of electrical, optical, gravimetric, and viscoelastic properties of a sample under test. A schematic of the system is shown below. 
 ![IMES shematic](./img/imes_schematic.jpg)
 
 
