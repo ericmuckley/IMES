@@ -3,6 +3,10 @@
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
 
+The code and README file for this software is avilable at
+https://github.com/ericmuckley/IMES
+
+
 A picture of the actual measurement chamber is shown below.
 ![IMES in the lab](./img/imes.jpg)
 
@@ -86,5 +90,5 @@ Control for the humidity generator is accomplished by configuring the generator 
 
 ## Help
 
-For aditional help, you may contact Eric Muckley (ericmuckley at gmail dot com).
+For additional help, you may contact Eric Muckley (ericmuckley at gmail dot com).
 
