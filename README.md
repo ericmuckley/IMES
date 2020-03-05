@@ -2,6 +2,14 @@
 
 This repository contains software for controlling the Integrated Multifunctional Environmental System (IMES) at Center for Nanophase Materials Sciences (CNMS) at Oak Ridge National Laboratory (ORNL).
 
+
+![IMES in the lab](./img/imes.png)
+
+![IMES software screenshot](./img/imes_software.png)
+
+![IMES shematic](./img/imes_schematic.png)
+
+
 ## Installing the software
 
 The software requires no formal installation, but installation of missing Python libraries will likely be required when running the software for the first time. To download the missing libraries, it is recommended to use the scientific Python distribution _Anaconda_ (https://www.anaconda.com/). If _Anaconda_ is not present on the local PC, download it from its website. Then download the _imes_python_ folder in this repository to the local PC and unzip it.
