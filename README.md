@@ -86,5 +86,5 @@ Control for the humidity generator is accomplished by configuring the generator 
 
 ## Help
 
-For aditional help, you may contact the author, Eric Muckley (ericmuckley at gmail dot com).
+For aditional help, you may contact Eric Muckley (ericmuckley at gmail dot com).
 
