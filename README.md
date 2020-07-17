@@ -11,7 +11,7 @@ A picture of the actual measurement chamber is shown below.
 ![IMES in the lab](./img/imes.jpg)
 
 
-The software which controls the system is loceted in this repositort. A screenshot of the software is shown below.
+The software which controls the system is located in this repository. A screenshot of the software is shown below.
 ![IMES software screenshot](./img/imes_software.jpg)
 
 
